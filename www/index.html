@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Moscow bike share stats 2015 / Статистика Московского велопроката в 2015 году</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta property="og:image" content="bikes_15.jpg" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link href='bikes.css' rel='stylesheet' />
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='js/config.js'></script>
+    <style>
+	    * { font-family: 'Roboto', sans-serif; }
+        body { margin:0; padding:0; }
+        #map {
+          font-family: Helvetica, Arial, Sans-Serif;
+          position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="alternate icon" type="image/png" href="favicon.png"/>
+</head>
+<body>
+<div id='logo-block'>
+  <a href="http://urbica.co/" target="_parent"><img src="./img/logo-small.svg" border="0"/><br/><span id="logoLink">Data analysis and visualisation</span></a>
+</div>
+<!-- <div id='title-demo'></div> -->
+<div id='states-panel' class='panel'></div>
+<div id='modes'>
+  <div id="exploreMode" title="Исследовательский режим"><div id="exploreModeBtn"></div></div>
+  <div id="demoMode" title="Режим презентации"><div id="demoModeBtn"></div></div>
+</div>
+
+<div id='header-panel' class='panel'>
+      <div id='title'></div>
+      <div id='service'></div>
+</div>
+<a href="http://urbica.co/bikes/?l=ru&from=afisha" target="_blank" title="На весь экран"><div id='fullscreen'></div></a>
+<div id='legend-panel' class="panel"></div>
+<div id='content-panel' class='panel'>
+  <div id='content'>
+  </div>
+</div>
+<div id='map'></div>
+<div id='tooltip'></div>
+<script src='js/bikes.js'></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter31411338 = new Ya.Metrika({
+                id:31411338,
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+            });
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/31411338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64821013-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

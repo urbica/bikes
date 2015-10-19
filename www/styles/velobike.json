@@ -1,0 +1,1186 @@
+{
+	"version": 8,
+	"name": "Basic",
+	"sources": {
+		"mapbox": {
+			"type": "vector",
+			"url": "mapbox://mapbox.mapbox-streets-v6"
+		},
+		"velobike": {
+			"type": "vector",
+			"url": "mapbox://minikarma.f2d25c9a"
+		}
+	},
+	"sprite": "sprites/velosprite",
+	"glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+	"layers": [
+		{
+			"id": "background",
+			"type": "background",
+			"paint": {
+				"background-color": "#000000"
+			}
+		},
+		{
+			"id": "landuse_park",
+			"type": "fill",
+			"source": "mapbox",
+			"source-layer": "landuse",
+			"filter": [
+				"==",
+				"class",
+				"park"
+			],
+			"paint": {
+				"fill-color": "#0F2113"
+			}
+		},
+		{
+			"id": "waterway",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "waterway",
+			"filter": ["all",["==", "$type", "LineString"], ["in", "class","river","canal"]],
+			"paint": {
+				"line-color": "#08192F",
+				"line-width": {
+					"base": 1.4,
+					"stops": [
+						[
+							8,
+							0.5
+						],
+						[
+							20,
+							15
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "water",
+			"type": "fill",
+			"source": "mapbox",
+			"source-layer": "water",
+			"paint": {
+				"fill-color": "#08192F"
+			}
+		},
+		{
+			"id": "building",
+			"type": "fill",
+			"source": "mapbox",
+			"source-layer": "building",
+			"paint": {
+				"fill-color": "#999999",
+				"fill-opacity": {
+					"base": 1,
+					"stops": [ [13,0],[17,0.4]]
+				}
+			}
+		},
+		{
+			"id": "tunnel_minor",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "tunnel",
+			"filter": [
+				"all",
+				[
+					"==",
+					"$type",
+					"LineString"
+				],
+				[
+					"in",
+					"class",
+					"motorway_link",
+					"street",
+					"street_limited",
+					"service",
+					"driveway",
+					"path"
+				]
+			],
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.55,
+					"stops": [
+						[
+							4,
+							0.25
+						],
+						[
+							20,
+							30
+						]
+					]
+				},
+				"line-dasharray": [
+					0.36,
+					0.18
+				]
+			}
+		},
+		{
+			"id": "tunnel_major",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "tunnel",
+			"filter": [
+				"all",
+				[
+					"==",
+					"$type",
+					"LineString"
+				],
+				[
+					"in",
+					"class",
+					"motorway",
+					"main"
+				]
+			],
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.4,
+					"stops": [
+						[
+							6,
+							0.5
+						],
+						[
+							20,
+							30
+						]
+					]
+				},
+				"line-dasharray": [
+					0.28,
+					0.14
+				]
+			}
+		},
+		{
+			"id": "road_minor",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "road",
+			"filter": [
+				"all",
+				[
+					"in",
+					"class",
+					"motorway_link",
+					"street",
+					"street_limited",
+					"service",
+					"driveway"
+				],
+				[
+					"==",
+					"$type",
+					"LineString"
+				]
+			],
+			"layout": {
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.55,
+					"stops": [
+						[
+							4,
+							0.25
+						],
+						[
+							20,
+							20
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "road_paths",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "road",
+			"filter": [
+				"all",
+				[
+					"==",
+					"class",
+					"path"
+				],
+				[
+					"==",
+					"$type",
+					"LineString"
+				]
+			],
+			"layout": {
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.55,
+					"stops": [
+						[
+							4,
+							0.25
+						],
+						[
+							20,
+							15
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "road_major",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "road",
+			"filter": [
+				"all",
+				[
+					"==",
+					"$type",
+					"LineString"
+				],
+				[
+					"in",
+					"class",
+					"motorway",
+					"main"
+				]
+			],
+			"layout": {
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.4,
+					"stops": [
+						[
+							6,
+							0.5
+						],
+						[
+							20,
+							30
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "bridge_minor",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "bridge",
+			"filter": [
+				"all",
+				[
+					"==",
+					"$type",
+					"LineString"
+				],
+				[
+					"in",
+					"class",
+					"motorway_link",
+					"street",
+					"street_limited",
+					"service",
+					"driveway",
+					"path"
+				]
+			],
+			"layout": {
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.55,
+					"stops": [
+						[
+							4,
+							0.25
+						],
+						[
+							20,
+							30
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "bridge_major",
+			"type": "line",
+			"source": "mapbox",
+			"source-layer": "bridge",
+			"filter": [
+				"all",
+				[
+					"in",
+					"class",
+					"motorway",
+					"main"
+				],
+				[
+					"==",
+					"$type",
+					"LineString"
+				]
+			],
+			"layout": {
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#2c2c2c",
+				"line-width": {
+					"base": 1.4,
+					"stops": [
+						[
+							6,
+							0.5
+						],
+						[
+							20,
+							30
+						]
+					]
+				}
+			}
+		},
+		{
+			"id": "velobike_grid_1",
+			"type": "fill",
+			"source": "velobike",
+			"source-layer": "grid",
+			"paint": {
+				"fill-color": "#A8F",
+				"fill-opacity": 0.8
+			}
+		},
+		{
+			"id": "velobike_grid_2",
+			"type": "fill",
+			"source": "velobike",
+			"source-layer": "grid",
+			"paint": {
+				"fill-color": "#A8F",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_grid_3",
+			"type": "fill",
+			"source": "velobike",
+			"source-layer": "grid",
+			"paint": {
+				"fill-color": "#A8F",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_grid_4",
+			"type": "fill",
+			"source": "velobike",
+			"source-layer": "grid",
+			"paint": {
+				"fill-color": "#A8F",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_grid_5",
+			"type": "fill",
+			"source": "velobike",
+			"source-layer": "grid",
+			"paint": {
+				"fill-color": "#A8F",
+				"fill-opacity": 0.5
+			}
+		},
+		{
+			"id": "velobike_districts_all",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_districts_1",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_districts_2",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_districts_3",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_districts_4",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_districts_5",
+			"type": "fill",
+			"source": "velobike",
+			"interactive": true,
+			"source-layer": "districts",
+			"paint": {
+				"fill-color": "#CCC",
+				"fill-opacity": 0
+			}
+		},
+		{
+			"id": "velobike_directions",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "visible",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_directions_1",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_directions_2",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_directions_3",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_directions_4",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_directions_5",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "directions_new",
+			"filter": ["all", [">", "total", 0]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+				"minzoom": 15,
+				"layout": {
+						"text-size": {
+								"base": 1,
+								"stops": [
+										[
+												15,
+												12
+										],
+										[
+												20,
+												14
+										]
+								]
+						},
+						"text-ignore-placement": false,
+						"text-max-angle": 30,
+						"symbol-spacing": 250,
+						"text-font": [
+								"DIN Offc Pro Regular",
+								"Arial Unicode MS Regular"
+						],
+						"symbol-placement": "line",
+						"text-padding": 1,
+						"visibility": "visible",
+						"text-rotation-alignment": "map",
+						"text-field": "{name_ru}",
+						"text-letter-spacing": 0.01
+				},
+				"maxzoom": 22,
+				"filter": [
+						"all",
+						[
+								"==",
+								"$type",
+								"LineString"
+						],
+						[
+								"in",
+								"class",
+								"motorway",
+								"main",
+								"street_limited",
+								"street"
+						]
+				],
+				"type": "symbol",
+				"source": "mapbox",
+				"id": "road-label-small",
+				"paint": {
+						"text-color": "#CCC",
+						"text-halo-width": 1,
+						"text-halo-color": "#333"
+				},
+				"source-layer": "road_label"
+		},
+		{
+		"id": "metro",
+		"type": "symbol",
+		"source": "mapbox",
+		"source-layer": "poi_label",
+		"filter": ["all", ["==", "maki", "rail-metro"]],
+		"layout": {
+			"icon-image": {"stops": [[11, "metro-white-small"],[15, "metro-white-large"]]},
+			"text-field": "{name_en}",
+			"text-font": [
+				"Roboto Medium",
+				"Open Sans Semibold"
+			],
+			"text-max-width": 8,
+			"text-size": 11,
+			"text-offset": {"stops": [[11, [0,1]],[15, [0,1.2]]] }
+		},
+		"paint": {
+			"text-opacity": 1,
+			"text-color": "#ccc",
+			"icon-opacity": {"stops": [[11, 0],[15,0.75]] },
+			"text-opacity": {"stops": [[11, 0],[15,0.75]] }
+		}
+		},
+		{
+			"id": "velobike_districts_links_1",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "districts_links",
+			"filter": ["all", [">", "total_rides", 10]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+
+		{
+			"id": "velobike_districts_links_2",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "districts_links",
+			"filter": ["all", [">", "total_rides", 10]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_districts_links_3",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "districts_links",
+			"filter": ["all", [">", "total_rides", 10]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_districts_links_4",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "districts_links",
+			"filter": ["all", [">", "total_rides", 10]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+			"id": "velobike_districts_links_5",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "districts_links",
+			"filter": ["all", [">", "total_rides", 10]],
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#999",
+				"line-width": {"base": 1, "stops": [[10,1],[12,1],[17,1.5]]},
+        "line-opacity": {"base": 1, "stops": [[10,0.1],[17,0.3]]}
+			}
+		},
+		{
+				"minzoom": 10,
+				"layout": {
+						"text-size": {
+								"base": 1,
+								"stops": [[13,12],[17,15]]
+						},
+						"text-ignore-placement": false,
+						"text-max-angle": 30,
+						"symbol-spacing": 250,
+						"text-font": [
+								"Roboto Medium",
+								"Arial Unicode MS Regular"
+						],
+						"symbol-placement": "line",
+						"text-padding": 1,
+						"visibility": "visible",
+						"text-rotation-alignment": "map",
+						"text-field": "{total_sum}",
+						"text-letter-spacing": 0.01
+				},
+				"maxzoom": 17,
+				"filter": ["all",["==", "$type", "LineString"], [">=", "total_sum",1000]],
+				"type": "symbol",
+				"source": "velobike",
+				"id": "velobike_districts_links_labels",
+				"paint": {
+						"text-color": "#CCC"
+				},
+				"source-layer": "districts_links"
+		},
+		{
+				"minzoom": 13,
+				"layout": {
+						"text-size": {
+								"base": 1,
+								"stops": [[13,12],[17,15]]
+						},
+						"text-ignore-placement": false,
+						"text-max-angle": 30,
+						"symbol-spacing": 250,
+						"text-font": [
+								"Roboto Medium",
+								"Arial Unicode MS Regular"
+						],
+						"symbol-placement": "line",
+						"text-padding": 1,
+						"visibility": "visible",
+						"text-rotation-alignment": "map",
+						"text-field": "{total_sum}",
+						"text-letter-spacing": 0.01
+				},
+				"maxzoom": 17,
+				"filter": ["all",["==", "$type", "LineString"], [">=", "total_sum",1000]],
+				"type": "symbol",
+				"source": "velobike",
+				"id": "velobike_districts_links_labels_small",
+				"paint": {
+						"text-color": "#CCC"
+				},
+				"source-layer": "districts_links"
+		},
+		{
+			"id": "top_user",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "top_client",
+			"layout": {
+				"visibility": "none",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#FA0",
+				"line-width":  { "base": 1, "stops": [[10,0.5],[12,1],[17,1.5]]},
+        "line-opacity": { "base": 1, "stops": [[10,0.1],[17,0.1]]}
+			}
+		},
+		{
+			"id": "top_bike",
+			"type": "line",
+			"source": "velobike",
+			"source-layer": "top_bike",
+			"layout": {
+				"visibility": "visible",
+				"line-cap": "round",
+				"line-join": "round"
+			},
+			"paint": {
+				"line-color": "#F39",
+				"line-width":  { "base": 1, "stops": [[10,2],[12,2],[17,3]]},
+        "line-opacity": { "base": 1, "stops": [[10,1],[17,1]]}
+			}
+		},
+			{
+				"id": "velobike_station_circle_0",
+				"type": "circle",
+				"source": "velobike",
+				"source-layer": "stations",
+				"interactive": false,
+				"layout": {
+					"visibility": "visible"
+				},
+				"paint": {
+					"circle-radius": 0,
+					"circle-color": "#CCC",
+					"circle-opacity": 0.5
+				}
+				},
+				{
+		    "id": "velobike_station_circle_1",
+		    "type": "circle",
+		    "source": "velobike",
+		    "source-layer": "stations",
+				"interactive": true,
+		    "layout": { "visibility": "visible" },
+		    "paint": {
+		      "circle-radius": 0,
+		      "circle-color": "#CCC",
+		      "circle-opacity": 0.5
+		      }
+		    }, {
+		    "id": "velobike_station_circle_2",
+		    "type": "circle",
+		    "source": "velobike",
+		    "source-layer": "stations",
+				"interactive": true,
+		    "layout": { "visibility": "visible" },
+		    "paint": {
+		      "circle-radius": 0,
+		      "circle-color": "#CCC",
+		      "circle-opacity": 0.5
+		      }
+		    }, {
+		    "id": "velobike_station_circle_3",
+		    "type": "circle",
+		    "source": "velobike",
+		    "source-layer": "stations",
+				"interactive": true,
+		    "layout": { "visibility": "visible" },
+		    "paint": {
+		      "circle-radius": 0,
+		      "circle-color": "#CCC",
+		      "circle-opacity": 0.5
+		      }
+		    }, {
+		    "id": "velobike_station_circle_4",
+		    "type": "circle",
+		    "source": "velobike",
+		    "source-layer": "stations",
+				"interactive": true,
+		    "layout": { "visibility": "visible" },
+		    "paint": {
+		      "circle-radius": 0,
+		      "circle-color": "#CCC",
+		      "circle-opacity": 0.5
+		      }
+		    }, {
+		    "id": "velobike_station_circle_5",
+		    "type": "circle",
+		    "source": "velobike",
+		    "source-layer": "stations",
+				"interactive": true,
+		    "layout": { "visibility": "visible" },
+		    "paint": {
+		      "circle-radius": 0,
+		      "circle-color": "#CCC",
+		      "circle-opacity": 0.5
+		      }
+		    },
+				{
+			    "id": "velobike_districts_circle_1",
+			    "type": "circle",
+			    "source": "velobike",
+			    "source-layer": "districts_p",
+					"interactive": false,
+			    "layout": { "visibility": "visible" },
+			    "paint": {
+			      "circle-radius": 20,
+			      "circle-color": "#CCC",
+			      "circle-opacity": 0.5
+			      	}
+			  },
+				{
+			    "id": "velobike_districts_circle_2",
+			    "type": "circle",
+			    "source": "velobike",
+			    "source-layer": "districts_p",
+					"interactive": false,
+			    "layout": { "visibility": "visible" },
+			    "paint": {
+			      "circle-radius": 20,
+			      "circle-color": "#CCC",
+			      "circle-opacity": 0.5
+			      	}
+			  },
+				{
+			    "id": "velobike_districts_circle_3",
+			    "type": "circle",
+			    "source": "velobike",
+			    "source-layer": "districts_p",
+					"interactive": false,
+			    "layout": { "visibility": "visible" },
+			    "paint": {
+			      "circle-radius": 20,
+			      "circle-color": "#CCC",
+			      "circle-opacity": 0.5
+			      	}
+			  },
+				{
+			    "id": "velobike_districts_circle_4",
+			    "type": "circle",
+			    "source": "velobike",
+			    "source-layer": "districts_p",
+					"interactive": false,
+			    "layout": { "visibility": "visible" },
+			    "paint": {
+			      "circle-radius": 20,
+			      "circle-color": "#CCC",
+			      "circle-opacity": 0.5
+			      	}
+			  },
+				{
+			    "id": "velobike_districts_circle_5",
+			    "type": "circle",
+			    "source": "velobike",
+			    "source-layer": "districts_p",
+					"interactive": false,
+			    "layout": { "visibility": "visible" },
+			    "paint": {
+			      "circle-radius": 20,
+			      "circle-color": "#CCC",
+			      "circle-opacity": 0.5
+			      	}
+			  },
+	    {
+	    "id": "velobike_station_hover",
+	    "type": "circle",
+	    "source": "velobike",
+	    "source-layer": "stations",
+			"interactive": false,
+	    "minzoom": 5,
+	    "filter": ["all"],
+	    "layout": {
+	      "visibility": "visible"
+	    },
+	    "paint": {
+	      "circle-radius": 20,
+	      "circle-color": "#fff",
+	      "circle-opacity": {
+	         "base": 1,
+	         "stops": [[14, 0.2], [17, 0.3]]
+	       }
+	      }
+    	},
+
+						{
+						            "id": "poi-scalerank4-l15",
+						            "type": "symbol",
+						            "source": "mapbox",
+						            "source-layer": "poi_label",
+						            "filter": [
+						                "all",
+						                ["==", "maki", "park"]
+												],
+						            "minzoom": 10,
+						            "layout": {
+						                "text-line-height": 1.2,
+						                "text-size": {
+						                    "base": 1,
+						                    "stops": [
+						                        [
+						                            16,
+						                            11
+						                        ],
+						                        [
+						                            20,
+						                            13
+						                        ]
+						                    ]
+						                },
+						                "text-allow-overlap": false,
+						                "text-ignore-placement": false,
+						                "text-max-angle": 38,
+						                "symbol-spacing": 250,
+						                "text-font": [
+						                    "Roboto Medium",
+						                    "Arial Unicode MS Regular"
+						                ],
+						                "symbol-placement": "point",
+						                "text-padding": 2,
+						                "visibility": "visible",
+						                "text-offset": [
+						                    0,
+						                    1
+						                ],
+						                "text-rotation-alignment": "viewport",
+						                "text-anchor": "top",
+						                "text-field": "{name_en}",
+						                "text-letter-spacing": 0.02,
+						                "text-max-width": 8
+						            },
+						            "paint": {
+						                "text-color": "#fff",
+														"text-opacity": 0.3
+						            }
+						        },
+			{
+      "id": "velobike_stations_labels",
+      "type": "symbol",
+      "source": "velobike",
+      "source-layer": "stations",
+      "layout": {
+        "text-field": "",
+        "text-font": [
+          "Open Sans Semibold",
+          "Arial Unicode MS Bold"
+        ],
+        "text-max-width": 8,
+        "text-size": 11
+      },
+      "paint": {
+				"text-opacity": {"stops": [[11,0],[12,0.7],[16,1]]},
+        "text-color": "#fff",
+        "text-halo-width": 1,
+        "text-halo-color": "rgba(0,0,0,0.25)",
+        "text-halo-blur": 0.5
+      }
+    },
+		{
+		"id": "districts_labels_num",
+		"type": "symbol",
+		"source": "velobike",
+		"source-layer": "districts_links",
+		"layout": {
+			"text-field": "{local_rides_percent}",
+			"text-font": [
+				"Open Sans Semibold",
+				"Arial Unicode MS Bold"
+			],
+			"text-max-width": 8,
+			"text-size": 11
+		},
+		"paint": {
+			"text-color": "#fff",
+			"text-halo-width": 1,
+			"text-halo-color": "rgba(0,0,0,0.25)",
+			"text-halo-blur": 0.5
+		}
+		},
+		{
+		"id": "districts_labels",
+		"type": "symbol",
+		"source": "velobike",
+		"source-layer": "districts_p",
+		"layout": {
+			"text-field": "{name}",
+			"text-font": [
+				"Open Sans Semibold",
+				"Arial Unicode MS Bold"
+			],
+			"text-max-width": 8,
+			"text-size": 11
+		},
+		"paint": {
+			"text-color": "#fff",
+			"text-halo-width": 1,
+			"text-halo-color": "rgba(0,0,0,0.25)",
+			"text-halo-blur": 0.5
+		}
+	},
+	{
+	"id": "grid_labels",
+	"type": "symbol",
+	"source": "velobike",
+	"source-layer": "grid_p",
+	"layout": {
+		"text-field": "",
+		"text-font": [
+			"Open Sans Semibold",
+			"Arial Unicode MS Bold"
+		],
+		"text-max-width": 8,
+		"text-size": 11
+	},
+	"paint": {
+		"text-color": "#fff",
+		"text-halo-width": 1,
+		"text-halo-color": "rgba(0,0,0,0.25)",
+		"text-halo-blur": 0.5
+		}
+	},
+	{
+	"id": "velobike_station_point",
+	"type": "symbol",
+	"source": "velobike",
+	"source-layer": "stations",
+	"filter": ["none"],
+	"layout": {
+		"visibility": "none",
+		"text-allow-overlap": true,
+		"icon-allow-overlap": true,
+		"icon-image": {"stops":
+			[
+				[10,"velo-small"],
+				[12,"velo-medium"],
+				[15,"velo-large"]
+		]
+		},
+		"text-field": "#{code}",
+		"text-anchor": "top",
+		"text-offset": [0,1],
+		"text-font": [
+			"Roboto Medium",
+			"Open Sans Semibold"
+		],
+		"text-max-width": 8,
+		"text-size": 11,
+		"text-offset": {"stops": [[11, [0,1]],[15, [0,1.2]]] }
+	},
+	"paint": {
+		"text-opacity": 1,
+		"text-color": "#fff",
+		"icon-opacity": 0,
+		"text-opacity": {"stops": [[11, 0],[15,0.8]] }
+	}
+	}
+	]
+}

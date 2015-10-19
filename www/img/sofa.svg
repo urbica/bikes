@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>sofa</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Rectangle-95-+-Rectangle-96-+-Rectangle-93-Copy-+-Rectangle-106-+-Rectangle-106-Copy-Copy" sketch:type="MSLayerGroup" transform="translate(17.000000, 21.000000)" fill="#FFFFFF">
+            <g id="Rectangle-95-+-Rectangle-96-+-Rectangle-93-Copy" sketch:type="MSShapeGroup">
+                <path d="M19.1176471,11 L6.88235294,11 L6.88235294,9.89416559 C6.88235294,8.7807795 6.09676543,7.8306367 5,7.4788576 L5,3.00579834 C5,1.34574176 6.33663106,0 8.00947762,0 L17.9905224,0 C19.652611,0 21,1.34881592 21,3.00579834 L21,7.4788576 C19.9032346,7.8306367 19.1176471,8.7807795 19.1176471,9.89416559 L19.1176471,11 L19.1176471,11 Z" id="Rectangle-95"></path>
+                <rect id="Rectangle-96" x="7" y="12" width="12" height="3"></rect>
+                <path d="M6,16 L6,9.99201702 C6,8.90017617 5.10550383,8 4.00208688,8 L1.99791312,8 C0.898260623,8 0.268658675,8.85695128 0.600065947,9.91405425 L1.39993405,12.4654254 C1.7302711,13.5191147 2,14.4136416 2,14.4557826 L2,17.9914909 C2,18.5476697 2.45190985,19 3.0093689,19 L5,19 L20,19 L20,16 L6,16 L6,16 Z M24,14.4557826 C24,14.4136416 24.2697289,13.5191147 24.6000659,12.4654254 L25.3999341,9.91405425 C25.7313413,8.85695128 25.1017394,8 24.0020869,8 L21.9979131,8 C20.8944962,8 20,8.90017617 20,9.99201702 L20,19 L22.9906311,19 C23.5480902,19 24,18.5476697 24,17.9914909 L24,14.4557826 L24,14.4557826 Z" id="Rectangle-93"></path>
+            </g>
+            <rect id="Rectangle-106" sketch:type="MSShapeGroup" x="6" y="20" width="2" height="1"></rect>
+            <rect id="Rectangle-106-Copy" sketch:type="MSShapeGroup" x="18" y="20" width="2" height="1"></rect>
+        </g>
+    </g>
+</svg>
