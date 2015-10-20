@@ -173,6 +173,8 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
     map.on('click', function (e) {
       // query the map for the under the mouse
 
+      console.log(JSON.stringify(map.getCenter()) + '/' + map.getBearing());
+
       if(isKeynote) changeMode("explore");
 
       map.featuresAt(e.point, { radius: 10}, function (err, features) {
