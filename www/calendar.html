@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>bike stations</title>
+<meta name='viewport' calendar='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<style>
+
+body {
+  margin: 0;
+  background: #222;
+  min-width: 600px;
+  font-family: Helvetica, Arial, Sans-Serif;
+  color: #aaa;
+  font-size: 15px;
+
+}
+
+.axis text {
+  font: 10px sans-serif;
+  fill: #ccc;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+path.area-day {
+  fill: #00aaff;
+}
+
+path.area-month {
+  fill: #ff00CC;
+}
+
+path.area-season {
+  fill: #ff7500;
+}
+
+#totals  {
+  opacity: 0.5;
+   display: none;
+}
+
+#percents  {
+  opacity: 0.8;
+}
+
+#temp {
+
+}
+
+#durations {
+   display: none;
+
+}
+
+.bar-day {
+  fill: #00aaff;
+}
+.bar-month {
+  fill: #ff55AA;
+}
+.bar-season {
+  fill: #ffaa00;
+}
+
+</style>
+<body>
+<div id="calendar"></div>
+<div id="calendar-calendar"></div>
+<script src="js/d3.min.js"></script>
+
+<script>
+
+var format = d3.time.format("%Y-%m-%d"),
+    tickWidth,
+    seasonStart = format.parse("2015-05-01"),
+    seasonEnd = format.parse("2015-10-01"),
+    allDays = ((seasonEnd.getTime() - seasonStart.getTime()) / (1000 * 60 * 60 * 24)),
+    calendar = [],
+    minTemp = 15, maxTemp = 15, maxTotal = 0, maxDuration = 0,
+    offset = 40,
+    calendarWidth = window.innerWidth - 60;
+    calendarHeight = window.innerHeight > 500 ? window.innerHeight-100 : 300;
+    areaHeight = calendarHeight - offset;
+    //areaWidth = calendarWidth - offset*2,
+    tickWidth = Math.floor((calendarWidth - offset*2) / allDays),
+    areaWidth = tickWidth*allDays;
+    tickWidth = tickWidth<3 ? 3 : tickWidth; //setting the minimum tick width (for small screens);//the width of day width
+
+
+      //d3.select("#calendar-calendar").append("h2").attr("class", "calendar-title").text("Активность по часам");
+  var svg = d3.select("#calendar-calendar").append("svg").attr("width", window.innerWidth).attr("height", window.innerHeight),
+    calendar = svg.append("g"),
+    calendarTotals = calendar.append("g").attr("id", "totals")
+      .attr("transform", "translate("+ offset + ",0)"),
+    calendarPercent = calendar.append("g").attr("id", "percents")
+      .attr("transform", "translate("+ offset + ",0)"),
+    calendarDurations = calendar.append("g").attr("id", "durations")
+      .attr("transform", "translate("+ offset + ",0)"),
+    calendarHover = calendar.append("g").attr("id", "hover")
+      .attr("transform", "translate("+ offset + ",0)"),
+    calendarTemp = calendar.append("g").attr("id", "temp")
+      .attr("transform", "translate("+ offset + ",0");
+
+var x = d3.time.scale()
+  .domain([seasonStart, seasonEnd])
+  .range([0, areaWidth]);
+
+var xAxis = d3.svg.axis()
+  .scale(x);
+
+var totals = [], durations = [], temp = [], rain = [], idx = [];
+
+d3.tsv("data/days.csv", function(d) {
+  calendar[d.ride_date] = {
+    rides_total: +d.rides_total,
+    rides_day: +d.rides_day,
+    rides_month: +d.rides_month,
+    rides_season: +d.rides_season,
+    duration_average: +d.duration_average,
+    duration_day: +d.duration_day,
+    duration_month: +d.duration_month,
+    duration_season: +d.duration_season,
+    clouds: d.clouds,
+    rain: d.rain,
+    temp: +d.temp
+  };
+
+  totals.push({ total: +d.rides_total, day: +d.rides_day, month: +d.rides_month, season: +d.rides_season });
+  durations.push({average: +d.duration_average, day: +d.duration_day, month: +d.duration_month, season: +d.duration_season });
+  temp.push(+d.temp);
+  rain.push(d.newdata_rain);
+  idx.push(d.ride_date);
+
+  if(+d.temp > minTemp) minTemp = +d.temp;
+  if(+d.temp > maxTemp) maxTemp = +d.temp;
+  if(+d.rides_total > maxTotal) maxTotal = +d.rides_total;
+  if(+d.duration_day > maxDuration) maxDuration = +d.duration_day;
+  if(+d.duration_month > maxDuration) maxDuration = +d.duration_month;
+  if(+d.duration_season > maxDuration) maxDuration = +d.duration_season;
+
+}, function(error, rows) {
+
+  buildCalendar();
+});
+
+function buildCalendar() {
+
+  yTotal = d3.scale.linear().domain([0,maxTotal]).range([areaHeight, 0]),
+  yTotalBar = d3.scale.linear().domain([0,maxTotal]).range([0, areaHeight]),
+  yTotalPercent = d3.scale.linear().domain([0,100]).range([areaHeight, 0]),
+  yTotalPercentBar = d3.scale.linear().domain([0,100]).range([0, areaHeight]),
+  yTemp = d3.scale.linear().domain([5,35]).range([areaHeight, 0]),
+  yDurations = d3.scale.linear().domain([0,maxDuration+10]).range([areaHeight, 0]),
+  yTotalAxis = d3.svg.axis().scale(yTotal).ticks(4).orient("left"),
+  yPercentAxis = d3.svg.axis().scale(yTotalPercent).ticks(4).orient("left"),
+  yDurationsAxis = d3.svg.axis().scale(yDurations).ticks(4).orient("left"),
+  yTempAxis = d3.svg.axis().scale(yTemp).ticks(4).orient("right");
+
+  var lineTotals = d3.svg.line()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y(function(d,i) { return yTotal(d.total); });
+
+  var lineDurationSeason = d3.svg.line()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y(function(d,i) { return yDurations(d.season); });
+
+  var lineDurationMonth = d3.svg.line()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y(function(d,i) { return yDurations(d.month); });
+
+  var lineDurationDay = d3.svg.line()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y(function(d,i) { return yDurations(d.day); });
+
+  var lineTemp = d3.svg.line()
+      .interpolate("cardinal")
+      .x(function(d,i) { return i*tickWidth+tickWidth/2; })
+      .y(function(d,i) { return yTemp(d); });
+
+  var areaDay = d3.svg.area()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y0(areaHeight)
+      .y1(function(d) { return yTotal(d.day); });
+
+  var areaDuration = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d,i) { return i*tickWidth; })
+    .y0(areaHeight)
+    .y1(function(d) { return yTotal(d.day); });
+
+
+var areaMonth = d3.svg.area()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      //.y0(areaHeight)
+      .y0(function(d) {
+        return yTotal(d.day); })
+      .y1(function(d) { return yTotal(d.total - d.season); });
+
+
+var areaSeason = d3.svg.area()
+      .interpolate("basis")
+      .x(function(d,i) { return i*tickWidth; })
+      .y0(areaHeight)
+      .y0(function(d) { return yTotal(d.day+d.month); })
+      .y1(function(d) { return yTotal(d.total); });
+
+  calendar.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate("+ offset + "," + areaHeight + ")")
+    .call(xAxis);
+
+  calendarTemp.append("g").attr("class", "y axis").attr("transform", "translate("+ (areaWidth+offset) +",0)").call(yTempAxis);
+  calendarTotals.append("g").attr("class", "y axis").call(yTotalAxis);
+  calendarPercent.append("g").attr("class", "y axis").call(yPercentAxis);
+  calendarDurations.append("g").attr("class", "y axis").call(yDurationsAxis);
+/*
+  rain.forEach(function(d,i) {
+    if(d) {
+      console.log(idx[i]);
+    calendarTemp
+      .append("rect")
+      .attr("width", tickWidth-1)
+      .attr("height", areaHeight)
+      .attr("x",tickWidth*i)
+      .attr("y",0)
+      .style("fill", "#aaa")
+      .style("opacity", 0.2);
+    }
+  });
+  */
+
+  calendarTemp.append("svg:path")
+    .style("opacity", 1)
+    .style("stroke", "#ffffff")
+    .style("stroke-width", 2)
+    .style("fill", "none")
+    .attr("transform", "translate("+offset+",0)")
+    .attr("d", function(d) {
+      return lineTemp(temp);
+    });
+
+  //absolute numbers
+
+  totals.forEach(function(d,i) {
+
+  if(rain[i]) {
+    calendarTemp
+      .append("svg:circle")
+      .attr("cx", offset+tickWidth*i+tickWidth/2)
+      .attr("cy", yTemp(temp[i]))
+      .attr("r",tickWidth/2)
+      .style("fill", "#55f")
+      .style("opacity", 1);
+
+  }
+
+  calendarTotals
+      .append("rect")
+      .attr("class", "bar-day")
+      .attr("width", tickWidth-1)
+      .attr("height", yTotalBar(d.day))
+      .attr("x",tickWidth*i)
+      .attr("y", areaHeight-yTotalBar(d.day))
+      .style("fill", "#00ccff")
+      .style("stroke", "#ffffff")
+      .style("stroke-width", 2)
+      .style("opacity", 0.75);
+
+  calendarTotals
+    .append("rect")
+    .attr("class", "bar-month")
+    .attr("width", tickWidth-1)
+    .attr("height", yTotalBar(d.month))
+    .attr("x",tickWidth*i)
+    .attr("y", areaHeight-yTotalBar(d.day+d.month));
+
+calendarTotals
+  .append("rect")
+  .attr("class", "bar-season")
+  .attr("width", tickWidth-1)
+  .attr("height", yTotalBar(d.season))
+  .attr("x",tickWidth*i)
+  .attr("y", areaHeight-yTotalBar(d.day+d.month+d.season));
+
+calendarPercent
+    .append("rect")
+    .attr("class", "bar-day")
+    .attr("width", tickWidth-1)
+    .attr("height", yTotalPercentBar(d.day/d.total*100))
+    .attr("x",tickWidth*i)
+    .attr("y", areaHeight - yTotalPercentBar(d.day/d.total*100));
+
+
+calendarPercent
+  .append("rect")
+  .attr("class", "bar-month")
+  .attr("width", tickWidth-1)
+  .attr("height", yTotalPercentBar(d.month/d.total*100)-0.5)
+  .attr("x",tickWidth*i)
+  .attr("y", yTotalPercentBar(d.season/d.total*100));
+
+calendarPercent
+  .append("rect")
+  .attr("class", "bar-season")
+  .attr("width", tickWidth-1)
+  .attr("height", yTotalPercentBar(d.season/d.total*100)-0.5)
+  .attr("x",tickWidth*i)
+  .attr("y", 0);
+
+});
+
+
+/*
+  calendar.append("svg:path")
+    .attr("class", "area-day")
+    .style("opacity", 0.5)
+    .attr("d", function(d) { return areaDay(totals); });
+
+
+  calendar.append("svg:path")
+    .attr("class", "area-month")
+    .style("opacity", 0.7)
+    .attr("d", function(d) { return areaMonth(totals); });
+
+  calendar.append("svg:path")
+    .attr("class", "area-season")
+    .style("opacity", 0.7)
+    .attr("d", function(d) { return areaSeason(totals); });
+*/
+
+  calendarDurations.append("svg:path")
+      .attr("fill", "none")
+      .style("stroke", "#ff7500")
+      .style("opacity", 1)
+      .style("stroke-width", 2)
+      .attr("d", function(d) { return lineDurationSeason(durations); });
+
+  calendarDurations.append("svg:path")
+      .attr("fill", "none")
+      .style("stroke", "#ff00CC")
+      .style("opacity", 1)
+      .style("stroke-width", 2)
+      .attr("d", function(d) { return lineDurationMonth(durations); });
+
+  calendarDurations.append("svg:path")
+      .attr("fill", "none")
+      .style("stroke", "#00aaff")
+      .style("opacity", 1)
+      .style("stroke-width", 2)
+      .attr("d", function(d) { return lineDurationDay(durations); });
+
+
+/*
+  calendarPointer
+    .attr("class", "graph-pointer")
+    .attr("x1",0)
+    .attr("x2",0)
+    .attr("y1",0)
+    .attr("y2",areaHeight)
+    .style("stroke", "#f0f0f0")
+    .style("opacity", 1);
+*/
+/*
+console.log(allDays);
+  calendarAreacalendar
+    .append("rect")
+    .attr("transform", "translate("+ offset + "," + offset + ")")
+    .attr("width", tickWidth*allDays)
+    .attr("height", areaHeight)
+    .attr("x",0)
+    .attr("y",0)
+    .style("fill", "#000")
+    .style("opacity", 0.2);
+
+
+
+    //adding bars to graph
+    for(var day in calendar) {
+
+      var height = areaHeight - (calendar[day].rides_total/maxTotal)*areaHeight;
+      var y = areaHeight - height;
+      var bar = calendarAreacalendarTotals.append("rect")
+        .attr("x", dateToPixels(day, tickWidth))
+        .attr("y", y)
+        .attr("id", day)
+        .attr("width", tickWidth-1)
+        .attr("height", height)
+        .style("fill", "#00DADE")
+        .style("opacity", 1);
+
+        bar.on('click', function(e) {console.log('sss'); })
+      //  if(calendar[day].clouds) bar.style("fill", "#a0a0a0");
+        if(calendar[day].rain) bar.style("fill", "#0077FF");
+
+      }
+
+      */
+
+}
+
+function dateToPixels(date, tick) {
+  var d = format.parse(date),
+      w = Math.floor((d.getTime() - seasonStart.getTime()) / (1000 * 60 * 60 * 24))*tick;
+  return w;
+
+}
+
+</script>
+</body>
+</html>

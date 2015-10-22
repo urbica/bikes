@@ -24,7 +24,7 @@ var cState = {stateId: "total"}; //current state
 var interval, isKeynote = false,
     m = "explore", //mode: explore | demo
     currentSlide = 0, //current scene in the siquence
-    slidesSpeed = 11500; //demo-mode speed in milliseconds
+    slidesSpeed = 8500; //demo-mode speed in milliseconds
 
 function toArray(_Object){
        var _Array = new Array();
@@ -56,8 +56,10 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
 
     var demoMode = d3.select("#demoMode"),
         exploreMode = d3.select("#exploreMode"),
+        calendarMode = d3.select("#calendarMode"),
         demoModeBtn = d3.select("#demoModeBtn"),
         exploreModeBtn = d3.select("#exploreModeBtn"),
+        calendarModeBtn = d3.select("#calendarModeBtn"),
         fullscreenBtn = d3.select("#fullscreen");
 
         if(orign === "afisha" || orign === "afisha/") {
@@ -71,6 +73,8 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
 
     demoModeBtn.on('click', function(d){ changeMode("demo"); });
     exploreModeBtn.on('click', function(d){ changeMode("explore"); });
+    calendarModeBtn.on('click', function(d){ changeMode("calendar"); });
+
 
     var mapArea = d3.select("#map"),
         panelStates = d3.select("#states-panel"),
@@ -214,14 +218,31 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
         }
         panelStates.style("visibility", "hidden");
         isKeynote = true;
+        demoMode.attr("class", "mode-selected");
+
       } else {
         clearInterval(interval);
         panelContent.style("visibility", "hidden");
         panelStates.style("visibility", "visible");
         isKeynote = false;
         demoMode.attr("class", "mode");
-        exploreMode.attr("class", "mode-selected");
+
       }
+
+      if(mode=="calendar") {
+        calendarMode.attr("class", "mode-selected");
+        d3.select("#calendar-screen").style("display","block");
+      } else {
+        calendarMode.attr("class", "mode");
+        d3.select("#calendar-screen").style("display","none");
+      }
+
+      if(mode=="explore") {
+        exploreMode.attr("class", "mode-selected");
+      } else {
+        exploreMode.attr("class", "mode");
+      }
+
     }
 
 
@@ -307,7 +328,7 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
         if(isKeynote) {
           panelContent.style("visibility","visible");
           panelContent.text("");
-          panelContent.append("div").attr("class", "description").text(state.description);
+          panelContent.append("div").attr("class", "description").text(state.description[l]);
         }
       }
 
