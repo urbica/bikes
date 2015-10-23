@@ -12,7 +12,6 @@ var lang = {
   roundtripsCount: { ru: "возвраты на ту же станцию", en: "percent of roundtrips" },
   uniqueUsers: { ru: "уникальные пользователи", en: "unique users"},
   startTime: { ru: "начало работы станции", en: "date start"}
-
 };
 
 var menu = [
@@ -422,7 +421,7 @@ var states = [
   "legend": {
     "description": { "en": "Total stats", "ru": "Процент поездок, которые закончились на той же станции, откуда был взят велосипед."},
     "image": "legend-roundtrips.svg",
-    "min": { "en": "29%", "ru": "29%"},
+    "min": { "en": "7%", "ru": "7%"},
     "max": { "en":  "62%", "ru": "62%" }
   },
   "layers": [
@@ -1100,7 +1099,7 @@ var states = [
     { "id": "velobike_districts_all",
       "filter": ["all"],
       "paint": {
-        "fill-opacity": 0.1,
+        "fill-opacity": 0,
         "fill-color": "#6666FF",
         "stroke-width": 1
       }
@@ -1108,7 +1107,7 @@ var states = [
     { "id": "velobike_districts_1",
       "filter": ["all", ["==", "id", 131]],
       "paint": {
-        "fill-opacity": 0.15,
+        "fill-opacity": 0,
         "fill-color": "#00BD6B",
         "stroke-width": 1
       }

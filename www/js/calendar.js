@@ -74,6 +74,7 @@ var calendarCurrent = 0,
     calendarTitle = d3.select("#calendar-title"),
     calendar = svg.append("g")
       .attr("transform", "translate("+ offset + ","+offset/2+")"),
+    calendarDays = calendar.append("g").attr("id", "days"),
     calendarTotals = calendar.append("g").attr("id", "totals")
     calendarPercent = calendar.append("g").attr("id", "percents")
     calendarDurations = calendar.append("g").attr("id", "durations"),
@@ -247,20 +248,14 @@ var areaSeason = d3.svg.area()
   calendarDurations.append("g").attr("class", "y axis").call(yDurationsAxis);
 
   calendarTemp.append("svg:path")
-    .style("opacity", 0.5)
-    .style("stroke", "#000000")
-    .style("stroke-width", 4)
-    .style("fill", "none")
+    .attr("class", "temp-path-bg")
     .attr("d", function(d) {
       return lineTemp(calendarData);
     });
 
 
   calendarTemp.append("svg:path")
-    .style("opacity", 1)
-    .style("stroke", "#ffffff")
-    .style("stroke-width", 2)
-    .style("fill", "none")
+    .attr("class", "temp-path-line")
     .attr("d", function(d) {
       return lineTemp(calendarData);
     });
@@ -275,8 +270,7 @@ var areaSeason = d3.svg.area()
       .attr("cx", tickWidth*i+tickWidth/2)
       .attr("cy", yTemp(d.temp))
       .attr("r",tickWidth/2)
-      .style("fill", "#55f")
-      .style("opacity", 1);
+      .attr("class", "rain-circle");
 
   }
 
@@ -330,12 +324,25 @@ calendarPercent
   .attr("x",tickWidth*i)
   .attr("y", 0);
 
+
+  calendarDays
+      .append("rect")
+      .attr("width", tickWidth-1)
+      .attr("height", areaHeight)
+      .attr("x",tickWidth*i)
+      .attr("class", function() {
+        if(d.ride_date.getDay()>0 && d.ride_date.getDay()<6)
+          return "bar-weekday";
+          else return "bar-workday";
+      });
+
   calendarHover
     .append("rect")
     .attr("class", "bar-hover")
     .attr("width", tickWidth-1)
     .attr("height", areaHeight)
     .attr("x",tickWidth*i)
+    .style("fill", "#ffffff")
     .attr("y", 0)
     .on("mouseenter", function(e){
       var dl,ml,sl;

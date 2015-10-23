@@ -131,7 +131,7 @@
   position: absolute;
   display:block;
   bottom: 10px;
-  left: 20px;
+  left: 10px;
   z-index: 1999999;
   font-size: 11px;
   text-decoration: none;
@@ -158,13 +158,10 @@
   position: absolute;
   display:block;
   max-width: 240px;
-  width: 200px;
   margin-left: -100px;
-  margin-right: -100px;
   min-width: 100px;
-  bottom: 10px;
+  bottom: 25px;
   left: 50%;
-  right: 50%;
   padding: 5px;
   visibility: hidden;
   line-height: 20px;
@@ -524,16 +521,40 @@ path.path-season {
 }
 
 .bar-hover {
-  opacity: 0.1;
-  fill: #ffffff;
+  opacity: 0;
   cursor: pointer;
 }
 
 .bar-hover:hover {
-  opacity: 0.5;
-  fill: #ffffff;
+  opacity: 0.3;
 }
 
+.bar-weekday {
+  fill: #222;
+}
+
+.bar-workday {
+  fill: #333;
+}
+
+.rain-circle {
+  fill: #55f;
+  opacity: 1;
+}
+
+.temp-path-bg {
+  stroke: #000;
+  opacity: 1;
+  fill: none;
+  stroke-width: 4;
+}
+
+.temp-path-line {
+  stroke: #fff;
+  opacity: 1;
+  fill: none;
+  stroke-width: 2;
+}
 
 
 @media only screen and (max-width: 1000px) {
