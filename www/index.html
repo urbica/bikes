@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8' />
     <title>Moscow bike share stats 2015 / Статистика Московского велопроката в 2015 году</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name="viewport" content="initial-scale=1">
     <meta property="og:image" content="bikes_15.jpg" />
     <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     <link href='bikes.css' rel='stylesheet' />
@@ -12,8 +12,10 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
     <script src='js/config.js'></script>
     <style>
+
+
 	    * { font-family: 'Roboto', sans-serif; }
-        body { margin:0; padding:0; }
+        body { margin:0; padding:0; background: #000; }
         #map {
           font-family: Helvetica, Arial, Sans-Serif;
           position:absolute; top:0; bottom:0; width:100%; }
@@ -24,10 +26,13 @@
 </head>
 <body>
 <div id='logo-block'>
-  <a href="http://urbica.co/" target="_parent"><img src="./img/logo-small.svg" border="0"/><br/><span id="logoLink">Data analysis and visualisation</span></a>
+  <a href="http://urbica.co/" target="_parent"><div id="logo-image"></div><div id="logo-link">Data analysis and visualisation</div></a>
 </div>
 <!-- <div id='title-demo'></div> -->
-<div id='states-panel' class='panel'></div>
+<div id='states-btn'></div>
+<div id='states-panel' class='panel'>
+    <div id='states-menu'></div>
+</div>
 <div id='modes'>
   <div id="exploreMode" title="Research mode"><div id="exploreModeBtn"></div></div>
   <div id="demoMode" title="Demo mode"><div id="demoModeBtn"></div></div>
@@ -37,6 +42,8 @@
 <div id='header-panel' class='panel'>
       <div id='title'></div>
 </div>
+<div id='about-btn'>About</div>
+
 <a href="http://urbica.co/bikes/?l=ru&from=afisha" target="_blank" title="На весь экран"><div id='fullscreen'></div></a>
 <div id='legend-panel' class="panel"></div>
 <div id='content-panel' class='panel'>
@@ -44,14 +51,47 @@
   </div>
 </div>
 <div id='map'></div>
+<div id='debug'></div>
 <div id='calendar-screen'>
   <div id='calendar-title'></div>
   <div id='calendar-modes'></div>
-  <div id='calendar-chart'></div>
+  <div id='calendar-wrapper'>
+    <div id='calendar-chart'></div>
+  </div>
   <div id='calendar-legend'></div>
 </div>
-
 <div id='tooltip'></div>
+<div id='about-screen'>
+  <div id='about-close'></div>
+  <div id='about-screen-content'>
+  <div id='about-title'>Moscow bike share stats</div>
+  <div id='about-description'>Urbica design analyzed more than 800 000 bike share rides for Moscow Department of Transport.</div>
+  <div id='about-modes'>
+    <div id='about-modes-description'>There is three modes to investigate the data</div>
+    <div id='about-mode-explore'><div id='about-mode-explore-btn'>Explore</div></div>
+    <div id='about-mode-demo'><div id='about-mode-demo-btn'>Keynote</div></div>
+    <div id='about-mode-calendar'><div id='about-mode-calendar-btn'>Calendar</div></div>
+  </div>
+  <div id='about-go'><div id='about-go-btn'>Go to the project</div></div>
+  <div id='about-credits-ru'>
+    Данные о велопрокатах: <a href="http://velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="http://openstreetmap.org">OpenSteetMap</a>
+    /&nbsp;Линии маршрутов: <a href="http://project-osrm.org" target="_blank">Project-OSRM</a>
+    /&nbsp;Хостинг данных: <a href="http://mapbox.com" target="_blank">Mapbox</a>
+    /&nbsp;Рендеринг: <a href="http://https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
+    /&nbsp;Иконки погоды: <a href="http://www.alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
+    Проект создан студей <a href="http://urbica.co" target="_blank">Urbica Design</a>
+  </div>
+  <div id='about-credits-en'>
+    Bike share data: <a href="http://velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="http://openstreetmap.org">OpenSteetMap</a>
+    /&nbsp;Routes paths: <a href="http://project-osrm.org" target="_blank">Project-OSRM</a>
+    /&nbsp;Data hosting: <a href="http://mapbox.com" target="_blank">Mapbox</a>
+    /&nbsp;Rendering: <a href="http://https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
+    /&nbsp;Weather icons: <a href="http://www.alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
+    The project is created by <a href="http://urbica.co" target="_blank">Urbica Design</a>
+  </div>
+  </div>
+</div>
+
 <script src='js/calendar.js'></script>
 <script src='js/bikes.js'></script>
 <!-- Yandex.Metrika counter -->

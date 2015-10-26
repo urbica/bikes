@@ -5,10 +5,24 @@
 
 
 #states-panel {
-  position: absolute; top: 60px; right: 0px;
-  min-width: 100px; z-index: 4000;  }
-#states-panel div {
-  /* border-bottom: 1px solid rgba(80,80,80,0.8); */
+  position: absolute; top: 70px; right: 10px;
+  z-index: 4000;  }
+
+#states-btn {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  display: block;
+  visibility: hidden;
+  background: url('img/btn-states.svg') center center no-repeat;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 3000;
+}
+
+#states-menu {
+
 }
 
 #exploreMode,
@@ -73,32 +87,52 @@
 #header-panel {
   color: #ccc;
   position: absolute;
-  min-width: 320px;
+  min-width: 220px;
   line-height: 60px;
   height: 60px;
   overflow: none;
   top: 0px;
   width: 100%;
   z-index: 3000;
-  text-align: center;
+  text-align: left;
+/*  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: stretch; */
 }
 
 
 #title {
   color: #e7e7e7;
-  padding: 0px 20px;
-  display: block;
   line-height: 60px;
-  padding: 0px 20px 0px 20px;
   font-size: 24px;
+  margin-left: 20px;
+  margin-right: 80px;
   text-shadow: 0px 2px 4px rgba(0,0,0,0.50);
   z-index: 4000;
+}
+
+#about-btn {
+  color: #ccc;
+  line-height: 60px;
+  display: block;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  padding: 0px 20px 0px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  z-index: 9000;
+}
+
+#about-btn:hover {
+  color: #fff;
 }
 
 #modes {
   position: absolute;
   left: 0px;
-  top: 120px;
+  top: 70px;
   height: 60px;
   width: 60px;
   z-index: 10000;
@@ -132,16 +166,20 @@
   display:block;
   bottom: 10px;
   left: 10px;
-  z-index: 1999999;
+  z-index: 6000;
   font-size: 11px;
   text-decoration: none;
   color: #fff;
   opacity: 0.7;
 }
 
-#logo-block img {
+#logo-image {
+  background: url('img/logo-small.svg') 0px 0px no-repeat;
+  width: 73px;
+  height: 16px;
   margin-bottom: 3px;
 }
+
 
 #logo-block a,
 #logo-block a:active,
@@ -160,7 +198,7 @@
   max-width: 240px;
   margin-left: -100px;
   min-width: 100px;
-  bottom: 25px;
+  bottom: 10px;
   left: 50%;
   padding: 5px;
   visibility: hidden;
@@ -173,27 +211,28 @@
 #tooltip {
   font-size: 24px;
   color: #ccc;
+  visibility: hidden;
   font-family: Roboto Medium, Sans-Serif;
   background: rgba(0,0,0,0.8);
   padding: 10px;
   max-width: 250px;
   font-size: 12px;
-  position: absolute;
+  position: fixed;
   z-index: 6000;
 }
 
 #content-panel {
-  font-size: 24px;
+  font-size: 14px;
   color: #fff;
-  padding: 5px;
+  padding: 0px;
   max-width: 220px;
   font-size: 12px;
   position: absolute;
-  top: 60px;
-  right: 0px;
+  top: 70px;
+  right: 10px;
   width: 250px;
   max-height: 400px;
-  z-index: 100666;
+  z-index: 14000;
   visibility: hidden;
   overflow-y: auto;
 }
@@ -287,12 +326,12 @@
 .header {
   font-size: 16px;
 }
-.param {
+.param, .param-advanced {
   margin-top: 10px;
+  margin-bottom: 10px;
   display: inline-block;
   text-align: center;
   width: 90px;
-  padding: 10px;
   vertical-align: top;
 }
 
@@ -316,6 +355,132 @@
   font-size: 12px;
 }
 
+path.loader {
+  fill: #fff;
+  opacity: 0.6;
+}
+
+/* ABOUT SCREEN BLOCKS */
+
+#about-screen {
+  display: none;
+  background: #000;
+  color: #ccc;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  line-height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 15000;
+  overflow: auto;
+}
+
+#about-screen a,a:visited {
+  color: #ccc;
+}
+
+#about-screen a:hover, a:active {
+  color: #fff;
+}
+
+#about-screen-content {
+  display: inline-block;
+  max-width: 700px;
+  padding: 20px;
+  line-height: 24px;
+  text-align: left;
+  font-size: 14px;
+}
+
+#about-title {
+  font-size: 32px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+#about-description {
+  margin-bottom: 20px;
+}
+
+#about-modes {
+  text-align: center;
+  margin: 20px 20px 20px 20px;
+}
+
+#about-mode-explore-btn,
+#about-mode-demo-btn,
+#about-mode-calendar-btn {
+  background: rgba(0,0,0,0.25);
+  line-height: 60px;
+  padding-left: 60px;
+  display: inline-block;
+  max-width: 200px;
+  cursor: pointer;
+}
+
+#about-mode-explore-btn:hover,
+#about-mode-demo-btn:hover,
+#about-mode-calendar-btn:hover {
+  color: #fff;
+  background: rgba(0,0,0,0);
+}
+
+#about-mode-explore,
+#about-mode-demo,
+#about-mode-calendar {
+  display: inline-block;
+  max-width: 200px;
+  margin-right: 20px;
+}
+
+#about-mode-explore {
+  background: url('img/microscope.svg') 0px 0px no-repeat;
+}
+
+#about-mode-demo {
+  background: url('img/sofa.svg') 0px 0px no-repeat;
+}
+
+#about-mode-calendar {
+  background: url('img/graph.svg') 0px 0px no-repeat;
+}
+
+#about-go {
+  font-size: 16px;
+  text-align: center;
+}
+
+#about-go-btn {
+  margin-top: 0px;
+  display: inline-block;
+  border: 2px solid #aaa;
+  cursor: pointer;
+  padding: 10px 40px;
+}
+
+#about-go-btn:hover {
+  border: 2px solid #eee;
+  color: #fff;
+}
+
+#about-credits-ru,
+#about-credits-en {
+  display: none;
+  color: #aaa;
+  font-size: 12px;
+  line-height: normal;
+  margin-top: 20px;
+}
+
+#about-credits-ru a,
+#about-credits-en a {
+  color: #aaa;
+}
 
 /* CALENDAR BLOCKS */
 
@@ -336,14 +501,15 @@
   color: #fff;
   font-size: 24px;
   position: absolute;
-  min-width: 320px;
+  min-width: 220px;
   line-height: 60px;
   height: 60px;
   overflow: none;
   top: 0px;
-  width: 100%;
   z-index: 3000;
-  text-align: center;
+  margin-left: 20px;
+  margin-right: 80px;
+  text-align: left;
 }
 
 #calendar-legend {
@@ -360,7 +526,6 @@
   text-align: center;
   width: 100%;
   margin-top: 60px;
-
 }
 
 .calendar-mode {
@@ -450,11 +615,16 @@
   padding-left: 16px;
 }
 
-#calendar-chart {
-  padding-left: 60px;
-  padding-right: 60px;
+#calendar-wrapper {
+  width: 100%;
   display: block;
-  text-align: center;
+  overflow: auto;
+}
+
+
+#calendar-chart {
+  margin-left: 60px;
+  display: block;
 }
 
 
@@ -496,7 +666,7 @@ path.path-season {
 }
 
 #temp path {
-  opacity: 0.7;
+
 }
 
 #temp path:hover {
@@ -567,6 +737,13 @@ path.path-season {
       font-size: 13px;
     }
 
+    #about-title {
+      font-size: 24px;
+    }
+
+
+
+
   }
 
   @media only screen and (max-width: 780px) {
@@ -575,17 +752,268 @@ path.path-season {
           font-size: 18px;
       }
 
-      .menu-item, .menu-header, .menu-item-selected {
+      #about-title {
+        font-size: 20px;
+      }
+
+      #about-screen-content {
         font-size: 13px;
-        padding: 6px 20px;
+        width: 100%;
+        padding: 0px;
+      }
+
+
+      #about-credits-ru,
+      #about-credits-en,
+      #about-description {
+        padding: 20px;
+      }
+
+
+
+      .menu-item, .menu-header, .menu-item-selected {
+        font-size: 14px;
+        padding: 5px 20px;
       }
   }
 
-  @media only screen and (max-height: 580px) {
-
+  @media only screen and (max-height: 540px) {
     .menu-item, .menu-header, .menu-item-selected {
-      font-size: 13px;
-      padding: 6px 20px;
+      font-size: 14px;
+      padding: 5px 20px;
     }
 
   }
+
+  #debug {
+    position: fixed;
+    display: none;
+    background: #333;
+    color: #aaa;
+    left: 0px;
+    top: 0px;
+    padding: 10px;
+    z-index: 9999;
+  }
+
+  /* mobile pattern */
+  @media only screen and (max-width: 700px) {
+
+    #title {
+      text-align: left;
+    }
+
+    #header-panel {
+      line-height: 40px;
+      height: 40px;
+    }
+
+    #title,
+    #calendar-title {
+      line-height: 40px;
+    }
+
+    #about-btn {
+      color: #ccc;
+      line-height: 40px;
+      padding: 0px 20px 0px 20px;
+      cursor: pointer;
+      font-size: 13px;
+      z-index: 9000;
+    }
+
+
+    #legend-panel {
+      display: none;
+    }
+
+    #states-panel {
+          position: absolute; top: 0px; left: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 14000;
+          background: #000;
+    }
+
+    #content-panel {
+      left: 0px;
+      bottom: 0px;
+      top:auto;
+      width: 100%;
+      max-width: none;
+      background: rgba(0,0,0,0.9);
+    }
+
+    .param {
+      width: 25%;
+      display: inline-block;
+      text-align: center;
+    }
+
+    /* hide unimportant params */
+    .param-advanced{
+      display: none;
+    }
+
+    .key {
+      text-align: center;
+      line-height: 20px;
+      padding: 5px;
+
+    }
+
+    .value {
+      text-align: center;
+      font-size: 20px;
+      line-height: 20px;
+      padding: 5px;
+    }
+
+    #logo-link {
+      display: none;
+    }
+
+    #logo-block {
+      bottom: 5px;
+      z-index: 4000;
+    }
+
+    #about-modes {
+      display: none;
+    }
+
+
+    #calendar-modes {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      line-height: 40px;
+      text-align: left;
+      margin-top: 0px;
+      z-index: 8000;
+    }
+
+    #calendar-wrapper {
+      margin-top: 40px;
+    }
+
+    #calendar-title {
+      display: none;
+    }
+
+    #calendar-mode-totals {
+      margin-left: 50px;
+    }
+
+    .calendar-mode,
+    .calendar-mode-selected {
+      padding: 0 5px;
+      margin-right: 5px;
+      font-size: 14px;
+    }
+
+    .calendar-legend-item {
+      font-size: 11px;
+    }
+
+    .calendar-legend-bullet {
+      margin: 0px;
+    }
+
+
+
+  }
+
+  /* mobile pattern landscape mode */
+  @media only screen and (max-height: 400px) {
+    .menu-item, .menu-item-selected {
+      font-size: 14px;
+      padding: 5px 20px;
+    }
+    .menu-header {
+      display: none;
+    }
+
+    .calendar-mode,
+    .calendar-mode-selected {
+      padding: 0 5px;
+      margin-right: 5px;
+      font-size: 14px;
+    }
+
+    #logo-link {
+      display: none;
+    }
+
+    #calendar-legend {
+      margin-top: 0px;
+    }
+    #states-panel {
+      top: 40px;
+      right: 0px;
+    }
+
+    #states-btn {
+      top: 40px;
+      right: 6px;
+    }
+
+    #header-panel {
+      line-height: 40px;
+      height: 40px;
+    }
+
+    #title,
+    #calendar-title {
+      line-height: 40px;
+    }
+
+    #about-btn {
+      color: #ccc;
+      line-height: 40px;
+      padding: 0px 20px 0px 20px;
+      cursor: pointer;
+      font-size: 13px;
+      z-index: 9000;
+    }
+
+    #modes {
+      position: absolute;
+      left: 0px;
+      top: 40px;
+      height: 50px;
+      width: 50px;
+      z-index: 10000;
+    }
+
+    .key {
+      margin-top: 0px;
+    }
+
+    .param {
+      margin-bottom: 0px;
+    }
+
+    .value {
+      padding: 0px;
+    }
+
+  }
+
+
+/* logo block positions */
+@media only screen and (max-width: 430px) {
+  #logo-block {
+    bottom: 25px;
+    z-index: 4000;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+
+  #logo-block {
+    bottom: 45px;
+    z-index: 4000;
+  }
+
+}

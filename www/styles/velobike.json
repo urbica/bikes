@@ -1152,7 +1152,7 @@
 	"type": "symbol",
 	"source": "velobike",
 	"source-layer": "stations",
-	"filter": ["none"],
+	"filter": ["all", ["==", "code", 9999]],
 	"layout": {
 		"visibility": "none",
 		"text-allow-overlap": true,

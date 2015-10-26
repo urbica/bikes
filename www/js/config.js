@@ -11,7 +11,27 @@ var lang = {
   capacity: { ru: "вместимость", en: "station capacity"},
   roundtripsCount: { ru: "возвраты на ту же станцию", en: "percent of roundtrips" },
   uniqueUsers: { ru: "уникальные пользователи", en: "unique users"},
-  startTime: { ru: "начало работы станции", en: "date start"}
+  startTime: { ru: "начало работы станции", en: "date start"},
+  explore: { ru: "Иследование", en: "Explore"},
+  demo: { ru: "Презентация", en: "Keynote"},
+  calendar: { ru: "Календарь", en: "Calendar"},
+  aboutTitle: { ru: "Статистика проката велосипедов в Москве", en: "Moscow bike share stats"},
+  aboutDescription: {
+    ru: "Urbica Design проанализировала статистику работы городского велопроката в 2015 году для Департамента транспорта Москвы. Данные о 812 000 поездок на 300 станциях проката были проанализированы и изучены по каждому направлению поездок в нескольких тематических срезах.",
+    en: "Urbica Design have analised Moscow bike share stats in 2015 for Moscow Department of Transport. The data about 812 000 rides from 300 docking stations was investigated in each direction by several topics."
+  },
+  aboutModes: {
+    ru: "Данные представлены в трёх режимах:",
+    en: "The data represented in three modes:"
+  },
+  back: {
+    ru: "Обратно к проекту",
+    en: "Back to the project"
+  },
+  start: {
+    ru: "Старт",
+    en: "Start"
+  }
 };
 
 var menu = [
@@ -81,7 +101,7 @@ var keynote = [
       speed: 0.5
     }
   },
-  { stateId: "station",
+  { stateId: "in_out",
   description: { ru: "А по числу отправлений — станция перед входом в Парк Горького",
                   en: "The station with biggest arrivals ratio placed near the Gorkiy Park"
                 },
@@ -199,7 +219,7 @@ var keynote = [
   { stateId: "top_user",
     description: {
       ru: "Самый активный пользователь, сделал 1114 поездок с суммарным временем поездок 17 162 минуты (это почти 12 суток).",
-      en: "The mos active user made 1114 rides across the city"
+      en: "The most active user made 1114 rides across the city"
     },
     flyTo: {
     center: [37.6369005460804, 55.76967154832707],
@@ -210,7 +230,7 @@ var keynote = [
   { stateId: "top_user",
     description: {
       ru: "Самый активный пользователь, сделал 1114 поездок с суммарным временем поездок 17 162 минуты (это почти 12 суток).",
-      en: "The mos active user made 1114 rides across the city"
+      en: "The most active user made 1114 rides across the city"
     },
     flyTo: {
     center: [37.60860659628409, 55.70441322377411],

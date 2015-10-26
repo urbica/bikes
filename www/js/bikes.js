@@ -17,14 +17,19 @@ function detectLang() {
     return tlang;
 }
 
-var orign = Requests.QueryString("orign");
-var l = detectLang(); //setting the language
-var pState = {stateId: "total"}; //prevous state
-var cState = {stateId: "total"}; //current state
-var interval, isKeynote = false,
-    m = "explore", //mode: explore | demo
+/* BASE STATEMENTS */
+var orign = Requests.QueryString("orign"),
+    paramFrom = Requests.QueryString("from"),
+    noSplash = Requests.QueryString("no-splash"),
+    l = detectLang(), //setting the language
+    pState = {stateId: "total"}, //prevous state
+    cState = {stateId: "total"}, //current state
+    interval, isKeynote = false,
+    isMobile = window.innerWidth < 700 ? true : false,
+    //isMobile = true,
+    m = "calendar", //"explore", //mode: explore | demo
     currentSlide = 0, //current scene in the siquence
-    slidesSpeed = 8500; //demo-mode speed in milliseconds
+    slidesSpeed = 12000; //demo-mode speed in milliseconds
 
 function toArray(_Object){
        var _Array = new Array();
@@ -41,6 +46,103 @@ var tooltip = d3.select("body")
 	.text("");
 
 
+var demoMode = d3.select("#demoMode"),
+    exploreMode = d3.select("#exploreMode"),
+    calendarMode = d3.select("#calendarMode"),
+    demoModeBtn = d3.select("#demoModeBtn"),
+    exploreModeBtn = d3.select("#exploreModeBtn"),
+    calendarModeBtn = d3.select("#calendarModeBtn"),
+    aboutExploreBtn = d3.select("#about-mode-explore-btn"),
+    aboutDemoBtn = d3.select("#about-mode-demo-btn"),
+    aboutCalendarBtn = d3.select("#about-mode-calendar-btn"),
+    fullscreenBtn = d3.select("#fullscreen"),
+    aboutBtn = d3.select("#about-btn"),
+    aboutScreen = d3.select("#about-screen"),
+    aboutGoBtn = d3.select("#about-go-btn");
+
+    aboutGoBtn.on('click', function(){
+      aboutScreen.style("display", "none");
+
+        //yaMetrika
+        //if(yaCounter31411338) yaCounter31411338.reachGoal('splash');
+      });
+
+      //applying the lang labels on various blocks
+      d3.select("#logo-link").text(lang.logoLink[l]);
+      d3.select("#about-title").text(lang.aboutTitle[l]);
+      d3.select("#about-description").text(lang.aboutDescription[l]);
+      d3.select("#about-modes-description").text(lang.aboutModes[l]);
+      d3.select("#about-credits-"+l).style("display", "block");
+
+      // *** DEBUG ***
+//      d3.select("#debug").text("isMobile: " + isMobile);
+
+      d3.select("#debug").text("m: " + isMobile + " w: " + window.innerWidth + " h: " + window.innerHeight);
+
+
+
+          var mapArea = d3.select("#map"),
+              panelStates = d3.select("#states-panel"),
+              menuStates = d3.select("#states-menu"),
+              btnStates = d3.select("#states-btn"),
+              tooltip = d3.select("#tooltip"),
+              panelContent = d3.select("#content-panel"),
+              legendBlock = d3.select("#legend-panel")
+              title = d3.select("#title").text("");
+
+  var input_format = d3.time.format("%Y-%m-%d %H:%M:%S");
+  var output_format = d3.time.format("%d.%m");
+  //2015-05-01 01:27:30
+
+  var arc = d3.svg.arc()
+    .innerRadius(18)
+    .outerRadius(20)
+    .startAngle(0);
+
+
+function getAboutScreen(btn,close) {
+  //btn - text on the GO button, close - true/false - close button on right corner
+  aboutScreen.style("display", "block");
+  if(btn)
+    d3.select("#about-go-btn").text(lang[btn][l]);
+}
+
+if(orign === "afisha" || orign === "afisha/") {
+  fullscreenBtn.style("visibility", "visible");
+  aboutBtn.style("visibility", "hidden");
+}
+
+if(orign === "afisha" || orign === "afisha/" || paramFrom == "afisha/" ||  paramFrom == "afisha" || noSplash) {
+  //do nothing
+} else {
+  //getting splash screen
+  getAboutScreen('start');
+}
+
+
+//handling resize events
+window.addEventListener('resize', function(event){
+  // do stuff here
+  var isM = window.innerWidth < 700 ? true : false;
+
+  if(isM != isMobile) {
+    //changeState(pState);
+    isMobile = isM;
+    d3.select("#debug").text("isMobile: " + isMobile);
+    if(isMobile)
+    {
+      panelStates.style("visibility","hidden");
+      btnStates.style("visibility","visible");
+
+    } else {
+      panelStates.style("visibility","visible");
+      btnStates.style("visibility","hidden");
+    }
+  }
+
+});
+
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWluaWthcm1hIiwiYSI6IjBhYjUzYWE4NjY4ZjkwYjM5Y2JjZTkyMTEwMzZkNTA1In0.zDqI_pymt9GAXoZlyz5Hrw';
 mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
@@ -54,20 +156,11 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
       idx[d.code] = i;
     });
 
-    var demoMode = d3.select("#demoMode"),
-        exploreMode = d3.select("#exploreMode"),
-        calendarMode = d3.select("#calendarMode"),
-        demoModeBtn = d3.select("#demoModeBtn"),
-        exploreModeBtn = d3.select("#exploreModeBtn"),
-        calendarModeBtn = d3.select("#calendarModeBtn"),
-        fullscreenBtn = d3.select("#fullscreen");
-
-        if(orign === "afisha" || orign === "afisha/") {
-          fullscreenBtn.style("visibility", "visible");
-        }
-
-
-    d3.select("#logoLink").text(lang.logoLink[l]);
+        aboutBtn.on('click', function(){
+          //aboutScreen.style("display", "block");
+          getAboutScreen('back');
+          if(isKeynote) changeMode("explore");
+        });
 
 
 
@@ -75,27 +168,42 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
     exploreModeBtn.on('click', function(d){ changeMode("explore"); });
     calendarModeBtn.on('click', function(d){ changeMode("calendar"); });
 
-
-    var mapArea = d3.select("#map"),
-        panelStates = d3.select("#states-panel"),
-        tooltip = d3.select("#tooltip"),
-        panel = d3.select("#content-panel"),
-        panelContent = d3.select("#content-panel"),
-        legendBlock = d3.select("#legend-panel")
-        title = d3.select("#title").text("");
-
-    var input_format = d3.time.format("%Y-%m-%d %H:%M:%S");
-    var ourput_format = d3.time.format("%d.%m");
-    //2015-05-01 01:27:30
+    aboutExploreBtn.on('click', function(d){
+      changeMode("explore");
+      aboutScreen.style("display", "none");
+    })
+      .text(lang.explore[l]);
+    aboutDemoBtn.on('click', function(d){
+      changeMode("demo");
+      aboutScreen.style("display", "none");
+    })
+      .text(lang.demo[l]);
+    aboutCalendarBtn.on('click', function(d){
+      changeMode("calendar");
+      aboutScreen.style("display", "none");
+    })
+    .text(lang.calendar[l]);
 
     if(!m) changeMode("explore");
       else changeMode(m);
 
+    btnStates.on('click', function() {
+      panelContent.style("visibility", "hidden");
+      panelStates.style("visibility", "visible");
+      btnStates.style("visibility", "hidden");
+      //if(isKeynote)
+    });
+
+    if(isMobile) {
+      btnStates.style("visibility", "visible");
+      panelStates.style("visibility", "hidden");
+    }
+
     function getMenu() {
-        panelStates.text("");
+        menuStates.text("");
         menu.forEach(function(s,i) {
 
-          var item = panelStates.append("div");
+          var item = menuStates.append("div");
           if (s.class == "header") {
             item
             .attr("class", "menu-header")
@@ -148,6 +256,8 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
           d3.select(".mapboxgl-canvas").style({
             cursor: "pointer"
           });
+
+          if(!isMobile)
           tooltip
             .style("top", (e.point.y+15)+"px")
             .style("left",(e.point.x+15)+"px")
@@ -177,7 +287,7 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
     map.on('click', function (e) {
       // query the map for the under the mouse
 
-      console.log(JSON.stringify(map.getCenter()) + '/' + map.getBearing());
+      //console.log(JSON.stringify(map.getCenter()) + '/' + map.getBearing());
 
       if(isKeynote) changeMode("explore");
 
@@ -188,42 +298,57 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
           //if the object is station
           if(features[0].properties.code) {
             changeState({stateId: 'station', station: features[0].properties.code });
-            getPanel({station: features[0].properties });
+            getPanelContent({station: features[0].properties });
           }
 
           //if the object is the district
           if(features[0].properties.district_rides) {
             changeState({stateId: 'district', district: features[0].properties.id });
-            getPanel({district: features[0].properties });
+            getPanelContent({district: features[0].properties });
           }
 
       } else {
-        getPanel();
+        getPanelContent();
         }
       });
     });
 
 
     function changeMode(mode) {
+
+      //yandex Metrika
+      //if(yaCounter31411338) yaCounter31411338.reachGoal(mode);
+
       if(mode === "demo") {
         if(!isKeynote) {
           interval = setInterval(getSlides, slidesSpeed);
-          map.flyTo({
-                center: [37.609367701865324,55.76494759216348],
-                zoom: 10,
-                speed: 0.04
-              })
+          if(isMobile) btnStates.style("visibility", "hidden");
           demoMode.attr("class", "mode-selected");
           exploreMode.attr("class", "mode");
+          isKeynote = true;
+          panelContent.style("visibility", "visible");
+          getSlides();
+        } else {
+          //changeMode("explore");
         }
         panelStates.style("visibility", "hidden");
-        isKeynote = true;
+        panelContent.style("visibility", "visible");
         demoMode.attr("class", "mode-selected");
 
       } else {
+
         clearInterval(interval);
+
+        demoModeBtn.text(""); //remove loader
+        if(map) map.stop(); //stop animation;
+
         panelContent.style("visibility", "hidden");
-        panelStates.style("visibility", "visible");
+        if(isMobile)
+          {
+            btnStates.style("visibility", "visible");
+          } else {
+            panelStates.style("visibility", "visible");
+          }
         isKeynote = false;
         demoMode.attr("class", "mode");
 
@@ -242,15 +367,76 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
       } else {
         exploreMode.attr("class", "mode");
       }
+    }
 
+    function getLoader() {
+      //demoModeBtn
+      demoModeBtn.text("");
+      var demoLoader = demoModeBtn.append("svg").attr("width", 60).attr("height", 60);
+
+
+      var loader = demoLoader.append("path")
+          .datum({endAngle: 2*Math.PI})
+          .attr("class", "loader")
+          .attr("transform", "translate(30,30)")
+          .attr("d", arc);
+
+          loader.transition()
+              .duration(slidesSpeed)
+              .ease("linear")
+              .call(arcTween, 0);
+
+    }
+
+    function arcTween(transition, newAngle) {
+      transition.attrTween("d", function(d) {
+        var interpolate = d3.interpolate(d.endAngle, newAngle);
+        return function(t) {
+          d.endAngle = interpolate(t);
+          return arc(d);
+        };
+      });
     }
 
 
     function changeState(state) {
 
+      //logging current state
+      //cState = state;
 
-      //setting visibility param
-      panelContent.style("visibility","hidden");
+      //managing panels visibility
+      if(isKeynote) {
+        //demo mode showing descriptions in content panel
+        //console.log('demo state');
+        panelStates.style("visibility","hidden");
+        btnStates.style("visibility", "hidden");
+        panelContent.style("visibility","visible");
+      } else {
+        if(!state.station && !state.district) {
+          //console.log('no-item state');
+          //the state without item iD (station/district)
+          //if(!isMobile)
+
+          panelContent.style("visibility","hidden");
+
+          if(isMobile) {
+            //console.log('isMobile');
+            btnStates.style("visibility", "visible");
+            panelStates.style("visibility","hidden");
+          } else {
+            btnStates.style("visibility", "hidden");
+            panelStates.style("visibility","visible");
+          }
+
+
+        } else {
+          //station or district — showing the content panel
+          //console.log('item state');
+          panelStates.style("visibility","hidden");
+          panelContent.style("visibility","visible");
+        }
+
+      }
 
       if(!state.station && !state.district) pState = state;
 
@@ -274,7 +460,12 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
 
 
         if(s.state == state.stateId) {
-          title.text(s.label[l]);
+
+            if(isMobile)
+              title.text(s['menu-label'][l]);
+                else
+                  title.text(s.label[l]);
+
             legendBlock.style("visibility", "visible").text("");
             if(s.legend) {
               var legendImageBlock = legendBlock.append("div");
@@ -326,7 +517,6 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
 
       if(state.description) {
         if(isKeynote) {
-          panelContent.style("visibility","visible");
           panelContent.text("");
           panelContent.append("div").attr("class", "description").text(state.description[l]);
         }
@@ -372,47 +562,44 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
             speed: 0.7
           });
         }
-        //getPanel(code);
+        //code);
       }
 
     }
 
     function getSlides() {
+      getLoader();
       if(currentSlide >= (keynote.length)) currentSlide = 0;
       changeState(keynote[currentSlide]);
       currentSlide += 1;
     }
 
-    function getPanel(item) {
+    function getPanelContent(item) {
       if(item) {
-        panel.text("");
+        panelContent.text("");
+        if(!isMobile) {
         panelContent.append("div").attr("id", "closeBtn").on('click', function () {
-            if(!isKeynote) {
-              changeState(pState);
-              panelStates.style("visibility", "visible");
-            }
+          changeState(pState);
           });
-        panelStates.style("visibility", "hidden");
-        panel.style("visibility","visible");
-
+        }
 
         if(item.station) {
 
           var i = idx[item.station.code],
               startTime = input_format.parse(stations[i].start),
-              startTimeOutput = ourput_format(startTime);
+              startTimeOutput = output_format(startTime);
 
               title.text(lang.bikeStation[l] + " #" + item.station.code);
 
-                var panelParamTotal = panel.append("div").attr("class", "param"),
-                    panelParamAverage = panel.append("div").attr("class", "param"),
-                    panelParamRoundtrips = panel.append("div").attr("class", "param"),
-                    panelParamUnique = panel.append("div").attr("class", "param"),
-                    panelParamStartTime = panel.append("div").attr("class", "param"),
-                    panelParamCapacity = panel.append("div").attr("class", "param"),
-                    //panelParamSubwayDistance = panel.append("div").attr("class", "param"),
-                    panelParamHours = panel.append("div"),
-                    panelParamDays = panel.append("div");
+                var panelParamTotal = panelContent.append("div").attr("class", "param"),
+                    panelParamAverage = panelContent.append("div").attr("class", "param"),
+                    panelParamRoundtrips = panelContent.append("div").attr("class", "param"),
+                    panelParamUnique = panelContent.append("div").attr("class", "param"),
+                    panelParamStartTime = panelContent.append("div").attr("class", "param-advanced"),
+                    panelParamCapacity = panelContent.append("div").attr("class", "param-advanced"),
+                    //panelParamSubwayDistance = panelContent.append("div").attr("class", "param"),
+                    panelParamHours = panelContent.append("div"),
+                    panelParamDays = panelContent.append("div");
 
 
                 panelParamTotal
@@ -472,10 +659,10 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
         if(item.district) {
           title.text(item.district['name_'+l]);
 
-          var panelParamTotalRides = panel.append("div").attr("class", "param"),
-              panelParamLocalRidesPercent = panel.append("div").attr("class", "param"),
-              panelParamAverageDuration = panel.append("div").attr("class", "param"),
-              panelParamStationsCount = panel.append("div").attr("class", "param");
+          var panelParamTotalRides = panelContent.append("div").attr("class", "param"),
+              panelParamLocalRidesPercent = panelContent.append("div").attr("class", "param"),
+              panelParamAverageDuration = panelContent.append("div").attr("class", "param"),
+              panelParamStationsCount = panelContent.append("div").attr("class", "param");
 
               panelParamTotalRides
                 .append("div").attr("class", "value")
@@ -511,10 +698,7 @@ mapboxgl.util.getJSON('./styles/velobike.json', function (err, style) {
 
         }
       } else {
-        panel.style("visibility","hidden");
-        panelStates.style("visibility", "visible");
         changeState(pState);
-
       }
 
     }
@@ -541,98 +725,6 @@ var lineHours = d3.svg.line()
         return 100+Math.sin(ang)*(d);
       })
       .interpolate("linear");
-
-
-//changeState(pState);
-function getHoursChart(code, parent) {
-  var chart = parent.append("svg").attr("width",200).attr("height", 200),
-      hours = stations[idx[code]].hours,
-      totalFare = [], dayFare = [], monthFare = [], seasonFare = [];
-
-      hours.forEach(function(d,i) {
-        totalFare.push(100);
-        dayFare.push(Math.round(d.d/d.t*100));
-        monthFare.push(Math.round(d.m/d.t*100));
-        seasonFare.push(Math.round(d.s/d.t*100));
-      });
-
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#aaa")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineHours(totalFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#25baff")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineHours(dayFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#ff00CC")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineHours(monthFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#ff7500")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineHours(seasonFare) + "Z"; });
-
-
-
-}
-
-
-function getDaysChart(code, parent) {
-  var chart = parent.append("svg").attr("width",200).attr("height", 200),
-      hours = stations[idx[code]].days,
-      totalFare = [], dayFare = [], monthFare = [], seasonFare = [];
-
-      hours.forEach(function(d,i) {
-        totalFare.push(100);
-        dayFare.push(Math.round(d.d/d.t*100));
-        monthFare.push(Math.round(d.m/d.t*100));
-        seasonFare.push(Math.round(d.s/d.t*100));
-      });
-
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#aaa")
-          .style("opacity", 2)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineDays(totalFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#25baff")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineDays(dayFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#ff00CC")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineDays(monthFare) + "Z"; });
-
-      chart.append("svg:path")
-          .attr("fill", "none")
-          .style("stroke", "#ff7500")
-          .style("opacity", 0.5)
-          .style("stroke-width", 2)
-          .attr("d", function(d) { return lineDays(seasonFare) + "Z"; });
-
-}
-
 
     d3.select("body")
       .on("keydown", function() {

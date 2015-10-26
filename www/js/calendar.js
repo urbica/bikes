@@ -19,7 +19,6 @@ function detectLang() {
 
 var l = detectLang();
 
-
 var calendarModes = [
   { id: "totals", ru: "Поездки по дням", en: "Total rides",
     title: {
@@ -50,45 +49,21 @@ var calendarLegend = [
 ];
 
 
-var calendarCurrent = 0,
+
+/* BASE STATEMENTS */
+var calendarTitle = d3.select("#calendar-title");
+var calendarCurrent = 'totals',
     format = d3.time.format("%Y-%m-%d"),
     label_format = d3.time.format("%d.%m"),
-    tickWidth,
     seasonStart = format.parse("2015-05-01"),
     seasonEnd = format.parse("2015-10-01"),
     allDays = ((seasonEnd.getTime() - seasonStart.getTime()) / (1000 * 60 * 60 * 24)),
-    calendar = [],
     minTemp = 15, maxTemp = 15, maxTotal = 0, maxDuration = 0,
-    offset = 40,
-    calendarWidth = window.innerWidth - offset*2 - 120;
-    calendarHeight = window.innerHeight > 400 ? window.innerHeight-200 : 200;
-    areaHeight = calendarHeight - offset;
-    //areaWidth = calendarWidth - offset*2,
-    tickWidth = Math.floor((calendarWidth) / allDays),
-    areaWidth = tickWidth*allDays;
-    tickWidth = tickWidth<3 ? 3 : tickWidth; //setting the minimum tick width (for small screens);//the width of day width
+    offset = 40;
 
+var calendarWidth, calendarHeight, areaHeight,areaWidth, tickWidth;
 
-      //d3.select("#calendar-calendar").append("h2").attr("class", "calendar-title").text("Активность по часам");
-  var svg = d3.select("#calendar-chart").append("svg").attr("width", calendarWidth).attr("height", calendarHeight),
-    calendarTitle = d3.select("#calendar-title"),
-    calendar = svg.append("g")
-      .attr("transform", "translate("+ offset + ","+offset/2+")"),
-    calendarDays = calendar.append("g").attr("id", "days"),
-    calendarTotals = calendar.append("g").attr("id", "totals")
-    calendarPercent = calendar.append("g").attr("id", "percents")
-    calendarDurations = calendar.append("g").attr("id", "durations"),
-    calendarTemp = calendar.append("g").attr("id", "temp"),
-    calendarHover = calendar.append("g").attr("id", "hover");
-
-    //var tooltip = d3.select("#tooltip");
-
-var x = d3.time.scale()
-  .domain([seasonStart, seasonEnd])
-  .range([0, areaWidth]);
-
-var xAxis = d3.svg.axis()
-  .scale(x);
+//var tooltip = d3.select("#tooltip");
 
 var calendarData = [];
 
@@ -109,7 +84,6 @@ calendarModes.forEach(function (cm,i) {
     .attr("id", "calendar-mode-"+cm.id)
     .on('click', function(d){
       changeCalendarMode(cm.id);
-//      console.log(cm.id);
     });
   });
 
@@ -122,6 +96,7 @@ function changeCalendarMode(mode) {
       d3.select("#"+cm.id).style("visibility", "visible");
       d3.select("#calendar-mode-"+cm.id).attr("class", "calendar-mode-selected");
       calendarTitle.text(cm.title[l]);
+      calendarCurrent = cm.id;
     } else {
       d3.select("#"+cm.id).style("visibility", "hidden");
       d3.select("#calendar-mode-"+cm.id).attr("class", "calendar-mode");
@@ -129,7 +104,23 @@ function changeCalendarMode(mode) {
   });
 }
 
-changeCalendarMode('totals');
+
+//window on resize end event
+
+var rsTimer = null;
+window.onresize = function(){
+    if(rsTimer) window.clearTimeout(rsTimer);
+    rsTimer = window.setTimeout(resizeDone,500);
+}
+
+
+function resizeDone(){
+    //You next step here
+    buildCalendar();
+    changeCalendarMode(calendarCurrent);
+    //console.log('resize end');
+}
+
 
 
 d3.tsv("./data/days.csv", function(d) {
@@ -165,11 +156,40 @@ d3.tsv("./data/days.csv", function(d) {
   if(+d.duration_season > maxDuration) maxDuration = +d.duration_season;
 
 }, function(error, rows) {
-
   buildCalendar();
+  changeCalendarMode('totals');
 });
 
 function buildCalendar() {
+
+  d3.select("#calendar-chart").text('');
+
+  //calculate page params
+  tickWidth = Math.floor((window.innerWidth-(offset*2 + 60)) / allDays);
+  tickWidth = tickWidth<4 ? 4 : tickWidth;//setting the minimum tick width (for small screens);//the width of day width
+  calendarWidth = tickWidth*allDays + offset*2;
+  calendarHeight = window.innerHeight > 400 ? window.innerHeight-150 : 200;
+  areaHeight = calendarHeight - offset;
+  areaWidth = tickWidth*allDays;
+
+  var x = d3.time.scale()
+    .domain([seasonStart, seasonEnd])
+    .range([0, areaWidth]);
+
+  var xAxis = d3.svg.axis()
+    .scale(x);
+
+
+var svg = d3.select("#calendar-chart").append("svg").attr("width", calendarWidth).attr("height", calendarHeight),
+  calendar = svg.append("g")
+    .attr("transform", "translate("+ offset + ","+offset/2+")"),
+  calendarDays = calendar.append("g").attr("id", "days"),
+  calendarTotals = calendar.append("g").attr("id", "totals")
+  calendarPercent = calendar.append("g").attr("id", "percents")
+  calendarDurations = calendar.append("g").attr("id", "durations"),
+  calendarTemp = calendar.append("g").attr("id", "temp"),
+  calendarHover = calendar.append("g").attr("id", "hover");
+
 
   yTotal = d3.scale.linear().domain([0,maxTotal]).range([areaHeight, 0]),
   yTotalBar = d3.scale.linear().domain([0,maxTotal]).range([0, areaHeight]),
@@ -352,7 +372,6 @@ calendarPercent
       tooltip
         .append("div").attr("class", "tooltip-date").text(d.ride_date_label);
 
-        console.log("clouds: " + d.clouds + " rain:" + d.rain);
       tooltip
         .append("div")
         .attr("class", function(z){
@@ -380,10 +399,31 @@ calendarPercent
       sl.append("span").attr("class", "tooltip-value-text").text(d.rides_season + " ("+Math.round(d.rides_season/d.rides_total*100)+" %)");
       sl.append("span").attr("class", "tooltip-value-duration").text(d.duration_season + "'");
 
-      if(event.pageX < (window.innerWidth-200))
-      tooltip.style("top", (event.pageY+15)+"px").style("left",(event.pageX+15)+"px");
-        else
-          tooltip.style("top", (event.pageY+15)+"px").style("left",(event.pageX+15)+"px");
+      if(event.pageX < (window.innerWidth-150)) {
+        //tooltip on the right
+        tooltip
+          .style("left",(event.pageX+10)+"px")
+          .style("right", "auto");
+      } else {
+        //tooltip on the left
+        tooltip
+        .style("right",(window.innerWidth-(event.pageX-10))+"px")
+        .style("left", "auto");
+      }
+
+      if(event.pageY < (window.innerHeight-200)) {
+        //tooltip on the right
+        tooltip
+          .style("top",(event.pageY+10)+"px")
+          .style("bottom", "auto");
+      } else {
+        tooltip
+        .style("bottom",(window.innerHeight-(event.pageY-10))+"px")
+        .style("top", "auto");
+      }
+
+
+
       tooltip.style("visibility", "visible");
     })
     .on("mouseout", function(e){
@@ -407,53 +447,6 @@ calendarPercent
       .attr("fill", "none")
       .attr("class", "path-day")
       .attr("d", function(d) { return lineDurationDay(calendarData); });
-
-
-/*
-  calendarPointer
-    .attr("class", "graph-pointer")
-    .attr("x1",0)
-    .attr("x2",0)
-    .attr("y1",0)
-    .attr("y2",areaHeight)
-    .style("stroke", "#f0f0f0")
-    .style("opacity", 1);
-*/
-/*
-console.log(allDays);
-  calendarAreacalendar
-    .append("rect")
-    .attr("transform", "translate("+ offset + "," + offset + ")")
-    .attr("width", tickWidth*allDays)
-    .attr("height", areaHeight)
-    .attr("x",0)
-    .attr("y",0)
-    .style("fill", "#000")
-    .style("opacity", 0.2);
-
-
-
-    //adding bars to graph
-    for(var day in calendar) {
-
-      var height = areaHeight - (calendar[day].rides_total/maxTotal)*areaHeight;
-      var y = areaHeight - height;
-      var bar = calendarAreacalendarTotals.append("rect")
-        .attr("x", dateToPixels(day, tickWidth))
-        .attr("y", y)
-        .attr("id", day)
-        .attr("width", tickWidth-1)
-        .attr("height", height)
-        .style("fill", "#00DADE")
-        .style("opacity", 1);
-
-        bar.on('click', function(e) {console.log('sss'); })
-      //  if(calendar[day].clouds) bar.style("fill", "#a0a0a0");
-        if(calendar[day].rain) bar.style("fill", "#0077FF");
-
-      }
-
-      */
 
 }
 
