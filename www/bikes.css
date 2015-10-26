@@ -225,13 +225,12 @@
   font-size: 14px;
   color: #fff;
   padding: 0px;
-  max-width: 220px;
+  max-width: 250px;
   font-size: 12px;
   position: absolute;
   top: 70px;
   right: 10px;
   width: 250px;
-  max-height: 400px;
   z-index: 14000;
   visibility: hidden;
   overflow-y: auto;
@@ -331,7 +330,7 @@
   margin-bottom: 10px;
   display: inline-block;
   text-align: center;
-  width: 90px;
+  width: 123px;
   vertical-align: top;
 }
 
@@ -754,6 +753,9 @@ path.path-season {
 
       #about-title {
         font-size: 20px;
+        margin-bottom: 0px;
+        margin-top: 20px;
+        line-height: normal;
       }
 
       #about-screen-content {

@@ -27,7 +27,7 @@ var orign = Requests.QueryString("orign"),
     interval, isKeynote = false,
     isMobile = window.innerWidth < 700 ? true : false,
     //isMobile = true,
-    m = "calendar", //"explore", //mode: explore | demo
+    m = "explore", //"explore", //mode: explore | demo
     currentSlide = 0, //current scene in the siquence
     slidesSpeed = 12000; //demo-mode speed in milliseconds
 

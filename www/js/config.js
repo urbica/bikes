@@ -18,11 +18,11 @@ var lang = {
   aboutTitle: { ru: "Статистика проката велосипедов в Москве", en: "Moscow bike share stats"},
   aboutDescription: {
     ru: "Urbica Design проанализировала статистику работы городского велопроката в 2015 году для Департамента транспорта Москвы. Данные о 812 000 поездок на 300 станциях проката были проанализированы и изучены по каждому направлению поездок в нескольких тематических срезах.",
-    en: "Urbica Design have analised Moscow bike share stats in 2015 for Moscow Department of Transport. The data about 812 000 rides from 300 docking stations was investigated in each direction by several topics."
+    en: "Urbica Design analyzed the performance statistics of the city bicycle rental in 2015 for the Department of Transport of Moscow. Data on 812 000 rides at 300 rental stations were studied and analyzed taking into account each ride direction and thematic segments. The detailed analysis identified main schemes of how bicycles were used in different districts of the city and explicitly showed the dependency of weather conditions on the use of a bicycle by various categories of riders."
   },
   aboutModes: {
     ru: "Данные представлены в трёх режимах:",
-    en: "The data represented in three modes:"
+    en: "The data are represented in three modes:"
   },
   back: {
     ru: "Обратно к проекту",
@@ -54,7 +54,7 @@ var keynote = [
 //  37.609367701865324,"lat":55.76494759216348
   { stateId: "total",
     description: { ru: "Общее число поездок с каждой станции в период с 1 мая по 30 сентября",
-                    en: "More than 800 000 bike share rides from 1 May to 30 September 2015 in Moscow"
+                    en: "The total number of rides during the period from 1 May to 30 September is 812 372 rides"
                   },
     flyTo: {
       center: [37.609367701865324,55.76494759216348],
@@ -65,7 +65,7 @@ var keynote = [
   { stateId: "total",
     description: {
       ru: "Самая популярная станция: №100 около станции метро Парк Культуры",
-      en: "The most popular docking station is near the Park Kultury metro station as is in the past year"
+      en: "The most popular station: No. 100 near the Park Kultury underground station of Moscow"
     },
     flyTo: {
       center: [37.59328099999999, 55.73519400000001],
@@ -75,7 +75,7 @@ var keynote = [
   },
   { stateId: "in_out",
     description: { ru: "Cоотношение числа прибытий и отправлений с каждой конкретной станции. Если число больше 100% – это означает, что с этого места чаще уезжали, чем оставляли там велосипеды",
-                    en: "The ratio departures/arrivals on each docking station shows where the most oneway rides"
+                    en: "The ratio of arrivals and departures from each specific station. If the number is more than 100%, it means that the place has been left more frequently than arrived at"
                   },
     flyTo: {
       zoom: 14,
@@ -85,7 +85,7 @@ var keynote = [
   { stateId: "in_out",
     description: {
       ru: "Лидер по числу прибытий, относительно отправлений — станция на Ломоносовском проспекте",
-      en: "The station with largest departures ratio is on the Lomonosovskiy highway" },
+      en: "The leading station by the number of arrivals in reference to departures is the station at the Lomonosov avenue" },
     flyTo: {
       center: [37.541315543087904, 55.6957973274063],
       speed: 0.4
@@ -93,7 +93,7 @@ var keynote = [
   },
   { stateId: "in_out",
     description: { ru: "А по числу отправлений — станция перед входом в Парк Горького",
-                    en: "The station with biggest arrivals ratio placed near the Gorkiy Park"
+                    en: "As for the number of departures, the leader is the station at the entrance of the Gorky Park"
                   },
     flyTo: {
       center: [37.6055867713105, 55.732109221083476],
@@ -103,7 +103,7 @@ var keynote = [
   },
   { stateId: "in_out",
   description: { ru: "А по числу отправлений — станция перед входом в Парк Горького",
-                  en: "The station with biggest arrivals ratio placed near the Gorkiy Park"
+                  en: "As for the number of departures, the leader is the station at the entrance of the Gorky Park"
                 },
     flyTo: {
       center: [37.6055867713105, 55.732109221083476],
@@ -114,7 +114,7 @@ var keynote = [
   { stateId: "roundtrips",
     description: {
       ru: "Процент поездок, закончившихся на этой станции. Как правило это поездки с целью прогулок.",
-      en: "The ratio of rides ended on the same doking station."
+      en: "The percentage of rides with the last stop at this station. As a rule, these rides are taken for outing"
     },
     flyTo: {
       center: [37.62071537484522,55.75728875946979],
@@ -125,7 +125,7 @@ var keynote = [
   { stateId: "roundtrips",
     description: {
       ru: "По числу поездок с возвратом на ту же станцию лидируют станции проката, в дальних районах рядом с парками. Например, рядом Битцевским парком",
-      en: "The biggest ratios of roundtrips are in the living districts near the parks, where the recreation rides are more usual than commute cycling"
+      en: "The leading stations by the number of rides with a return to the same station are the stations in far districts near the parks, for example, near the Bitsevsky Park"
     },
     flyTo: {
       center: [37.575850209685086,55.64369946443202],
@@ -136,7 +136,7 @@ var keynote = [
   { stateId: "unique",
     description: {
       ru: "Процент новых пользователей на каждой станции. Чем больше новых пользователей, тем эта станция более «туристическая». Чем меньше это значение — тем больше регулярных велосипедистов на этой станции",
-      en: "The ratio of unique users shows the type of users. The rides on the stations with large unique users ratio are more eventual (tourists, weekend ride, etc.). The small ratio shows the ratio of the regular users"
+      en: "The percentage of new riders at each station. The more new riders there are, the more “touristic” the station is. The lower the number is, the more regular riders there are at this station"
     },
     flyTo: {
       center: [37.60076942807282,55.749247018139016],
@@ -148,7 +148,7 @@ var keynote = [
   { stateId: "districts_local",
     description:  {
       ru: "Доля поездок, начавшихся и завершившихся в одном и том же районе",
-      en: "The ratio of local rides. It shows the percent of rides started and anded inside the same district"
+      en: "The percentage of rides with the departure and arrival at the same neighbourhood"
     },
     flyTo: {
       center: [37.60076942807282,55.749247018139016],
@@ -160,7 +160,7 @@ var keynote = [
     district: 131,
     description: {
       ru: "Хамовники — один из районов-лидеров по числу поездок внутри района. Территория Хамовников ограничена набережной Москвы-реки с трёх сторон",
-      en: "The big ratio of local rides is the Khamovniki district. It is placed in the center of Moscow and bounded by the enbankments"
+      en: "Khamovniki is one of the leading districts by the number of rides within the district. The area of Hamovniki is bounded from the three sides by the Moskva River embankment"
     },
     flyTo: {
       center: [37.578176748146944,55.7316247850149],
@@ -173,7 +173,7 @@ var keynote = [
     district: 130,
     description: {
       ru: "В Останкинском районе наибольший процент локальных поездок",
-      en: "The biggest ratio in the Ostankino district where the peple cycling in VDNKH park on weekends"
+      en: "The highest percentage of local rides is concentrated in Ostankino district"
     },
     flyTo: {
       center: [37.63108673855038,55.832194072098446],
@@ -185,7 +185,7 @@ var keynote = [
   { stateId: "districts_traffic",
     description: {
       ru: "Наиболее активный трафик между районами наблюдается в центре города",
-      en: "The most active traffic between the districts is in the center of the city"
+      en: "The most active traffic between the districts is occurred in the center of the city"
     },
     flyTo: {
       center: [37.61466612802937, 55.75161291168811],
@@ -197,7 +197,7 @@ var keynote = [
   { stateId: "fares",
     description: {
       ru: "Распределение маршрутов велопроката по тарифам. Карта иллюстрирует по каким маршрутам больше всего катаются пользователи с тем или иным тарифом.",
-      en: "There are three kinds of bike share subscriptions — «Day», «Month», «Season» "
+      en: "Distribution of routes by the fare type. The map shows the routes that passed by the largest number of riders with a certain fare — «Day», «Month» or «Season» "
     },
     flyTo: {
     center: [37.62027956993725,55.74390510679672],
@@ -208,7 +208,7 @@ var keynote = [
   { stateId: "duration",
     description: {
       ru: "Распределение маршрутов поездок по продолжительности.",
-      en: "The durations of rides map. The longest rides are on the weekends on enbankments."
+      en: "Distribution of routes by the ride duration. Average ride duration is 33 minutes"
     },
     flyTo: {
     center: [37.62027956993725,55.74390510679672],
@@ -219,7 +219,7 @@ var keynote = [
   { stateId: "top_user",
     description: {
       ru: "Самый активный пользователь, сделал 1114 поездок с суммарным временем поездок 17 162 минуты (это почти 12 суток).",
-      en: "The most active user made 1114 rides across the city"
+      en: "Most active rider made 1114 rides with the total ride time is 17 162 minutes (it is about 12 days)"
     },
     flyTo: {
     center: [37.6369005460804, 55.76967154832707],
@@ -229,8 +229,8 @@ var keynote = [
   },
   { stateId: "top_user",
     description: {
-      ru: "Самый активный пользователь, сделал 1114 поездок с суммарным временем поездок 17 162 минуты (это почти 12 суток).",
-      en: "The most active user made 1114 rides across the city"
+      ru: "Самый активный пользователь, сделал 1114 поездок с суммарным временем поездок 17 162 минуты (это почти 12 суток)",
+      en: "The most popular bicycle is the number 2222. It has driven for 11 days – during this time 2222 could get to China from Moscow"
     },
     flyTo: {
     center: [37.60860659628409, 55.70441322377411],
@@ -241,7 +241,7 @@ var keynote = [
   { stateId: "top_bikes",
     description: {
         ru: "Это аппарат под номером 2222. Суммарно за сезон он проехал 11 дней – за это время 2222 мог бы доехать из Москвы до Китая.",
-        en: "The most popular bike number is 2222. The time of use of the most popular bike is 11 days and 588 rides."
+        en: "The most popular bicycle is the number 2222. It has driven for 11 days – during this time 2222 could get to China from Moscow"
       },
     flyTo: {
     center: [37.60860659628409, 55.70441322377411],
@@ -1066,7 +1066,7 @@ var states = [
       "filter": ["all", ["==", "source", 9999]],
       "paint": {
         "line-color": "#FFBC36",
-        "line-width": {"stops": [[10,1],[17,3]]},
+        "line-width": {"stops": [[10,2],[17,4]]},
         "line-opacity": 0.6
       }
     },
@@ -1074,7 +1074,7 @@ var states = [
         "filter": ["all", ["==", "source", 9999]],
         "paint": {
           "line-color": "#FFBC36",
-          "line-width": {"stops": [[10,0.5],[17,1]]},
+          "line-width": {"stops": [[10,0.8],[17,1.5]]},
           "line-opacity": 0.4
       }
     },
@@ -1082,7 +1082,7 @@ var states = [
       "filter": ["all", ["==", "destination", 9999]],
       "paint": {
         "line-color": "#6699FF",
-        "line-width": {"stops": [[10,1],[17,3]]},
+        "line-width": {"stops": [[10,2],[17,4]]},
         "line-opacity": 0.4
       }
     },
@@ -1090,7 +1090,7 @@ var states = [
         "filter": ["all", ["==", "destination", 9999]],
         "paint": {
           "line-color": "#6699FF",
-          "line-width": {"stops": [[10,0.5],[17,1]]},
+          "line-width": {"stops": [[10,0.8],[17,1.5]]},
           "line-opacity": 0.3
       }
     }
