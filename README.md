@@ -9,7 +9,7 @@ The data are represented in three modes:
 * Presentation — the key facts from the research are represented in the form of an animated slide-show.
 * Calendar — the daily statistics on the bicycle rental performance (the total number, rates and average duration of a ride) and the influence of the weather conditions on the use of a bicycle.  
 
-The project:  [http://urbica.co/bikes/](http://urbica.co/bikes/)  
+The project:  [urbica.co/bikes/](http://urbica.co/bikes/)  
 Read [the full story](https://medium.com/@Urbica.co/bicycles-in-the-city-f9529d918388#.5a50iz3pf) on Medium  
 
 ## Data visualisation

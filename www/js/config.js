@@ -1029,8 +1029,8 @@ var states = [
   "legend": {
     "description": { "en": "Total stats", "ru": "Велосипед — лидер по числу поездок. Его брали в прокат 558 раз за сезон."},
     "image": "legend-station.svg",
-    "min": { "en": "входящие", "ru": "входящие"},
-    "max": { "en":  "исходящие", "ru": "исходящие" }
+    "min": { "en": "in", "ru": "входящие"},
+    "max": { "en":  "out", "ru": "исходящие" }
   },
   "layers": [
     { "id": "velobike_station_point",
