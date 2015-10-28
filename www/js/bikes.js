@@ -72,6 +72,7 @@ var demoMode = d3.select("#demoMode"),
       d3.select("#about-title").text(lang.aboutTitle[l]);
       d3.select("#about-description").text(lang.aboutDescription[l]);
       d3.select("#about-modes-description").text(lang.aboutModes[l]);
+      d3.select("#about-story-link").text(lang.readStory[l]).attr("href", lang.readStoryLink[l]);
       d3.select("#about-credits-"+l).style("display", "block");
 
       // *** DEBUG ***

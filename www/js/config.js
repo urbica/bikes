@@ -31,6 +31,14 @@ var lang = {
   start: {
     ru: "Старт",
     en: "Start"
+  },
+  readStory: {
+    ru: "Рассказ о проекте на Медиуме",
+    en: "The project's story on Medium"
+  },
+  readStoryLink: {
+    ru: "https://medium.com/russian/велосипеды-в-городе-230eb284b244",
+    en: "https://medium.com/@Urbica.co/bicycles-in-the-city-f9529d918388"
   }
 };
 

@@ -467,6 +467,25 @@ path.loader {
   color: #fff;
 }
 
+#about-story {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#about-story a,
+#about-story a:visited
+ {
+   color: #ccc;
+}
+
+#about-story a:active,
+#about-story a:hover,
+
+ {
+   color: #fff;
+}
+
+
 #about-credits-ru,
 #about-credits-en {
   display: none;
