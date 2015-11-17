@@ -18,3 +18,8 @@ Read [the full story](https://medium.com/@Urbica.co/bicycles-in-the-city-f9529d9
 * Data storage for visualization — [Mapbox](http://mapbox.com)  
 * Visualization technology [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/), graphs — [D3.js](http://d3js.org)  
 * Data preprocessing — Node.js, PostgreSQL/PostGIS, QGIS  
+
+## Get the stats data 
+The VeloBike stats data are published is under non-commercial use license.  
+See the special repository with datasets: [github.com/urbica/velodata/](https://github.com/urbica/velodata/)
+
