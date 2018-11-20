@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="88px" height="10px" viewBox="0 0 88 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 48</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FF3300" offset="0%"></stop>
+            <stop stop-color="#581B0E" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <rect id="Rectangle-1" fill="#000000" sketch:type="MSShapeGroup" x="-587" y="-383" width="1103" height="1164"></rect>
+        <text id="100" sketch:type="MSTextLayer" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">
+            <tspan x="68.7222222" y="-16">100</tspan>
+        </text>
+        <rect id="Rectangle-48" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup" x="0" y="0" width="88" height="10"></rect>
+    </g>
+</svg>

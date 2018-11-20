@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>bike stations</title>
+<meta name='viewport' calendar='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<style>
+
+body {
+  margin: 0;
+  background: #fff;
+  min-width: 600px;
+  font-family: Helvetica, Arial, Sans-Serif;
+  color: #333;
+  font-size: 15px;
+
+}
+
+
+#tooltip {
+  font-size: 24px;
+  color: #222;
+  font-family: Roboto Medium, Sans-Serif;
+  background: #fff;
+  padding: 10px;
+  max-width: 250px;
+  font-size: 12px;
+  position: absolute;
+  z-index: 6000;
+}
+
+
+/* CALENDAR BLOCKS */
+
+#calendar-screen {
+  display: block;
+/*  visibility: hidden; */
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 5000;
+  overflow-x: auto;
+}
+
+#calendar-title {
+  color: #fff;
+  font-size: 24px;
+  position: absolute;
+  min-width: 320px;
+  line-height: 60px;
+  height: 60px;
+  overflow: none;
+  top: 0px;
+  width: 100%;
+  z-index: 3000;
+  text-align: center;
+}
+
+#calendar-legend {
+  display: block;
+  text-align: center;
+  width: 100%;
+  color: #222;
+  margin-top: 10px;
+
+}
+
+#calendar-modes {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin-top: 60px;
+
+}
+
+.calendar-mode {
+  display: inline-block;
+  color: #222;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.calendar-mode-selected {
+  display: inline-block;
+  color: #222;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.calendar-legend-item {
+  display: inline-block;
+  font-size: 12px;
+}
+
+.calendar-legend-bullet {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 4px 0px 0px 20px;
+}
+
+
+.calendar-legend-label {
+  padding: 5px;
+}
+
+.tooltip-date {
+  font-size: 28px;
+  padding: 5px;
+  text-align: center;
+  display: block;
+}
+
+.tooltip-date-rainy,
+.tooltip-date-cloudy,
+.tooltip-date-clear {
+  line-height: 36px;
+  min-width: 40px;
+  font-size: 20px;
+  padding-left: 40px;
+  color: #222;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.tooltip-date-cloudy {
+  background: url('img/cloudy.svg') 0px 2px no-repeat;
+}
+
+.tooltip-date-rainy {
+  background: url('img/rainy.svg') 0px 0px no-repeat;
+}
+
+.tooltip-date-clear {
+  background: url('img/clear.svg') 0px 2px no-repeat;
+}
+
+.tooltip-value-bullet {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.tooltip-value-text {
+  display: inline-block;
+  width: 80px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.tooltip-value-duration {
+  display: inline-block;
+  background: url('img/clock.svg') 0px 3px no-repeat;
+  padding-left: 16px;
+}
+
+#calendar-chart {
+  padding-left: 60px;
+  padding-right: 60px;
+  display: block;
+  text-align: center;
+}
+
+
+.axis text {
+  font: 10px sans-serif;
+  fill: #222;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #222;
+  shape-rendering: crispEdges;
+}
+
+
+#totals  {
+
+}
+
+#percents  {
+}
+
+#temp path {
+}
+
+#temp path:hover {
+}
+
+#durations {
+
+}
+
+.bar-day {
+  fill: #0af;
+  opacity: 1;
+}
+.bar-month {
+  fill: #F49;
+  opacity: 1;
+}
+.bar-season {
+  fill: #FB0;
+  opacity: 1;
+}
+
+
+.bullet-day { background: #0af; }
+.bullet-month { background: #f49; }
+.bullet-season { background: #fb0; }
+.bullet-temp { background: #555; }
+.bullet-rain { background: #57f; border-radius: 4px; }
+
+
+path.path-day {
+  stroke: #00aaff;
+  stroke-width: 2;
+  opacity: 1;
+}
+
+path.path-month {
+  stroke: #f49;
+  stroke-width: 2;
+  opacity: 1;
+}
+
+path.path-season {
+  stroke: #fb0;
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.bar-hover {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bar-hover:hover {
+  opacity: 0.3;
+}
+
+.bar-weekday {
+  fill: #f8f8f8;
+}
+
+.bar-workday {
+  fill: #f0f0f0;
+}
+
+.rain-circle {
+  fill: #57f;
+  opacity: 1;
+}
+
+.temp-path-bg {
+  stroke: #fff;
+  opacity: 0;
+  fill: none;
+  stroke-width: 4;
+}
+
+.temp-path-line {
+  stroke: #555;
+  opacity: 0.7;
+  fill: none;
+  stroke-width: 2;
+}
+
+</style>
+<body>
+  <div id='calendar-screen'>
+    <div id='calendar-title'></div>
+    <div id='calendar-modes'></div>
+    <div id='calendar-chart'></div>
+    <div id='calendar-legend'></div>
+  </div>
+<script src="js/d3.min.js"></script>
+<script>
+var tooltip = d3.select("#tooltip");
+</script>
+<script src="js/calendar.js"></script>
+</body>
+</html>
