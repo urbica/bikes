@@ -5,11 +5,11 @@
     <title>Moscow bike share stats 2015 / Статистика Московского велопроката в 2015 году</title>
     <meta name="viewport" content="initial-scale=1">
     <meta property="og:image" content="bikes_15.jpg" />
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     <link href='bikes.css' rel='stylesheet' />
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src='//api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox-gl-js/v0.11.0/mapbox-gl.css' rel='stylesheet' />
     <script src='js/config.js'></script>
     <style>
 
@@ -26,7 +26,7 @@
 </head>
 <body>
 <div id='logo-block'>
-  <a href="http://urbica.co/" target="_parent"><div id="logo-image"></div><div id="logo-link">Data analysis and visualisation</div></a>
+  <a href="//urbica.co/" target="_parent"><div id="logo-image"></div><div id="logo-link">Data analysis and visualisation</div></a>
 </div>
 <!-- <div id='title-demo'></div> -->
 <div id='states-btn'></div>
@@ -44,7 +44,7 @@
 </div>
 <div id='about-btn'>About</div>
 
-<a href="http://urbica.co/bikes/?l=ru&from=afisha" target="_blank" title="На весь экран"><div id='fullscreen'></div></a>
+<a href="//urbica.co/bikes/?l=ru&from=afisha" target="_blank" title="На весь экран"><div id='fullscreen'></div></a>
 <div id='legend-panel' class="panel"></div>
 <div id='content-panel' class='panel'>
   <div id='content'>
@@ -65,7 +65,7 @@
   <div id='about-close'></div>
   <div id='about-screen-content'>
   <div id='about-title'>Moscow bike share stats</div>
-  <div id='about-description'>Urbica design analyzed more than 800 000 bike share rides for Moscow Department of Transport.</div>
+  <div id='about-description'>Urbica design analyzed more than 800 000 bike share rides for Moscow Department of Magistral.</div>
   <div id='about-modes'>
     <div id='about-modes-description'>There is three modes to investigate the data</div>
     <div id='about-mode-explore'><div id='about-mode-explore-btn'>Explore</div></div>
@@ -73,22 +73,22 @@
     <div id='about-mode-calendar'><div id='about-mode-calendar-btn'>Calendar</div></div>
   </div>
   <div id='about-go'><div id='about-go-btn'>Go to the project</div></div>
-  <div id='about-story'><a id='about-story-link' href="https://medium.com/@Urbica.co/bicycles-in-the-city-f9529d918388" target="_blank">The project's story on Medium</a></div>
+  <div id='about-story'><a id='about-story-link' href="//medium.com/@Urbica.co/bicycles-in-the-city-f9529d918388" target="_blank">The project's story on Medium</a></div>
   <div id='about-credits-ru'>
-    Данные о велопрокатах: <a href="http://velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="http://openstreetmap.org">OpenSteetMap</a>
-    /&nbsp;Линии маршрутов: <a href="http://project-osrm.org" target="_blank">Project-OSRM</a>
-    /&nbsp;Хостинг данных: <a href="http://mapbox.com" target="_blank">Mapbox</a>
-    /&nbsp;Рендеринг: <a href="http://https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
-    /&nbsp;Иконки погоды: <a href="http://www.alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
-    Проект создан студей <a href="http://urbica.co" target="_blank">Urbica Design</a> / Исходный код проекта: <a href="https://github.com/urbica/bikes">GitHub</a>
+    Данные о велопрокатах: <a href="//velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="//openstreetmap.org">OpenSteetMap</a>
+    /&nbsp;Линии маршрутов: <a href="//project-osrm.org" target="_blank">Project-OSRM</a>
+    /&nbsp;Хостинг данных: <a href="//mapbox.com" target="_blank">Mapbox</a>
+    /&nbsp;Рендеринг: <a href="//mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
+    /&nbsp;Иконки погоды: <a href="//alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
+    Проект создан студей <a href="//urbica.co" target="_blank">Urbica Design</a> / Исходный код проекта: <a href="//github.com/urbica/bikes">GitHub</a>
   </div>
   <div id='about-credits-en'>
-    Bike share data: <a href="http://velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="http://openstreetmap.org">OpenSteetMap</a>
-    /&nbsp;Routes paths: <a href="http://project-osrm.org" target="_blank">Project-OSRM</a>
-    /&nbsp;Data hosting: <a href="http://mapbox.com" target="_blank">Mapbox</a>
-    /&nbsp;Rendering: <a href="http://https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
-    /&nbsp;Weather icons: <a href="http://www.alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
-    The project is created by <a href="http://urbica.co" target="_blank">Urbica Design</a> / Source code: <a href="https://github.com/urbica/bikes">GitHub/urbika/bikes</a>
+    Bike share data: <a href="//velobike.ru" target="_blank">Velobike.ru</a>&nbsp;&nbsp; / &nbsp;&nbsp;Map data: <a href="//openstreetmap.org">OpenSteetMap</a>
+    /&nbsp;Routes paths: <a href="//project-osrm.org" target="_blank">Project-OSRM</a>
+    /&nbsp;Data hosting: <a href="//mapbox.com" target="_blank">Mapbox</a>
+    /&nbsp;Rendering: <a href="//mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>
+    /&nbsp;Weather icons: <a href="//.alessioatzeni.com/meteocons/" target="_blank">Meteocons</a><br/>
+    The project is created by <a href="//urbica.co" target="_blank">Urbica Design</a> / Source code: <a href="//github.com/urbica/bikes">GitHub/urbika/bikes</a>
   </div>
   </div>
 </div>

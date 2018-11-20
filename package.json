@@ -1,0 +1,23 @@
+{
+  "name": "bikes",
+  "version": "1.0.0",
+  "description": "Bikes in the city",
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/urbica/bikes#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbica/bikes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/urbica/bikes/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d www"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
+}

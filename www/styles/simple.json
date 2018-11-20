@@ -1,0 +1,50 @@
+{
+  "version": 7,
+  "name": "Walkingstreets",
+  "constants": {
+    "@name": "{name_en}",
+    "@sans": "Open Sans Regular, Arial Unicode MS Regular",
+    "@sans_md": "Open Sans Semibold, Arial Unicode MS Bold",
+    "@sans_bd": "Open Sans Bold, Arial Unicode MS Bold",
+    "@land": "#ebe8e0",
+    "@water": "#a0cfdf",
+    "@park": "#d2edae",
+    "@building": "#c6c1b4",
+    "@label": "#666",
+    "@label-halo": "rgba(255,255,255,0.75)",
+    "@road-major": "#F6F5F3",
+    "@road-minor": "#F6F5F3",
+    "@road-major-width": {
+      "base": 1.4,
+      "stops": [[6, 0.5], [20, 30]]
+    },
+    "@road-minor-width": {
+      "base": 1.55,
+      "stops": [[4, 0.25], [20, 30]]
+    }
+  },
+  "sources": {
+    "walkingstreets": {
+        "type": "vector",
+        "url": "mapbox://minikarma.60314840"
+    }
+  },
+  "sprite": "https://www.mapbox.com/mapbox-gl-styles/sprites/sprite",
+  "glyphs": "mapbox://fontstack/{fontstack}/{range}.pbf",
+  "layers": [{
+    "id": "background",
+    "type": "background",
+    "paint": {
+      "background-color": "@land"
+    }
+  }, {
+      "id": "osm_roads",
+      "type": "line",
+      "source": "walkingstreets",
+      "source-layer": "osm_roads",
+	  "paint": {
+		  "line-color": "#ff0000"
+	  	
+	  }
+  }]
+}
